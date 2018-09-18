@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>2D_SE4750MR(v2)</title>
+    
+    <link rel="stylesheet" href="../../../css/qunit/qunit-2.4.1.css"/>
+    <script type="text/javascript" src="../../../js/qunit/qunit-2.4.1.js"></script> 
+
+    <script type="text/javascript" src="../../../js/js_base_api.js"></script>
+    <script type="text/javascript" src="../../../js/cipherlab_v2/help/assert_api_help.js"></script>
+    <script type="text/javascript" src="../../../js/cipherlab_v2/CipherJsTestActionBase.js"></script>
+    <script type="text/javascript" src="../../../js/cipherlab_v2/reader_api/CipherJsTest_SE4750MR.js"></script>
+    
+    <script type="text/javascript">
+        airlock.onReady("handleAirlockReady()");
+
+        function handleAirlockReady() 
+        {
+            var tester = new CipherJsTest_SE4750MR();
+            tester.initCipherJsData();
+            tester.doJsAllTestModule();
+        }
+    </script>
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+</body>
+</html>

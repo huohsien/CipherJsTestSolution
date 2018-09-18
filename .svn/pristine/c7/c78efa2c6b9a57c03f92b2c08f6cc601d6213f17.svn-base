@@ -1,0 +1,146 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C662630D-4DE6-4482-9FA8-5D736265C7AB}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CipherJsTestWeb</RootNamespace>
+    <AssemblyName>CipherJsTestWeb</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Extensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\jquery\jquery.mobile.min.css" />
+    <Content Include="css\outcoder\ScriptExamples.css" />
+    <Content Include="css\qunit\qunit-2.4.1.css" />
+    <Content Include="css\ui_option.css" />
+    <Content Include="html\cipherlab_v1\api\Ex25_test.html" />
+    <Content Include="html\cipherlab_v1\api\SE4500_test.html" />
+    <Content Include="html\cipherlab_v1\api\SE4750MR_test.html" />
+    <Content Include="html\cipherlab_v1\api\SE4750SR_test.html" />
+    <Content Include="html\cipherlab_v1\api\SM1_test.html" />
+    <Content Include="html\cipherlab_v1\api\SM2_test.html" />
+    <Content Include="html\cipherlab_v1\cipherlab_v1_test.html" />
+    <Content Include="html\cipherlab_v1\reader_config\DataOut.html" />
+    <Content Include="html\cipherlab_v1\reader_config\Decoder.html" />
+    <Content Include="html\cipherlab_v1\reader_config\jquery.min.js" />
+    <Content Include="html\cipherlab_v1\reader_config\jquery.mobile.min.css" />
+    <Content Include="html\cipherlab_v1\reader_config\jquery.mobile.min.js" />
+    <Content Include="html\cipherlab_v1\reader_config\JSLib.js" />
+    <Content Include="html\cipherlab_v1\reader_config\NotiSett.html" />
+    <Content Include="html\cipherlab_v1\reader_config\ReaderCfgIndex.html" />
+    <Content Include="html\cipherlab_v1\reader_config\ScanPref.html" />
+    <Content Include="html\cipherlab_v1\reader_config\ScanTest.html" />
+    <Content Include="html\cipherlab_v1\reader_config\Symbol1D.html" />
+    <Content Include="html\cipherlab_v1\reader_config\Symbol2D.html" />
+    <Content Include="html\cipherlab_v2\cipherlab_v2_test.html" />
+    <Content Include="html\cipherlab_v2\cipherlab_v2_ui_test.html" />
+    <Content Include="html\cipherlab_v2\reader_api\test_EX25_v2.html" />
+    <Content Include="html\cipherlab_v2\reader_api\test_SE1524_v2.html" />
+    <Content Include="html\cipherlab_v2\reader_api\test_SE4500_v2.html" />
+    <Content Include="html\cipherlab_v2\reader_api\test_SE4750MR_v2.html" />
+    <Content Include="html\cipherlab_v2\reader_api\test_SE4750SR_v2.html" />
+    <Content Include="html\cipherlab_v2\reader_api\test_SE955_v2.html" />
+    <Content Include="html\cipherlab_v2\reader_api\test_SM1_v2.html" />
+    <Content Include="Index.html" />
+    <Content Include="js\cipherlab_v1\reader_api\ScannerAPI_Ex25.js" />
+    <Content Include="js\cipherlab_v1\reader_api\ScannerAPI_SE4500.js" />
+    <Content Include="js\cipherlab_v1\reader_api\ScannerAPI_SE4750MR.js" />
+    <Content Include="js\cipherlab_v1\reader_api\ScannerAPI_SE4750SR.js" />
+    <Content Include="js\cipherlab_v1\reader_api\ScannerAPI_SM1.js" />
+    <Content Include="js\cipherlab_v1\reader_api\ScannerAPI_SM2.js" />
+    <Content Include="js\cipherlab_v1\sw_reader_api.js" />
+    <Content Include="js\cipherlab_v1\sw_test_api.js" />
+    <Content Include="js\cipherlab_v2\CipherJsTestActionBase.js" />
+    <Content Include="js\cipherlab_v2\CipherJsTestDeviceAPI.js" />
+    <Content Include="js\cipherlab_v2\help\assert_api_help.js" />
+    <Content Include="js\cipherlab_v2\help\ui_api_help.js" />
+    <Content Include="js\cipherlab_v2\outcoder\Airlock.js" />
+    <Content Include="js\cipherlab_v2\outcoder\CipherLab.js" />
+    <Content Include="js\cipherlab_v2\reader_api\CipherJsTest_EX25.js" />
+    <Content Include="js\cipherlab_v2\reader_api\CipherJsTest_SE1524.js" />
+    <Content Include="js\cipherlab_v2\reader_api\CipherJsTest_SE4500.js" />
+    <Content Include="js\cipherlab_v2\reader_api\CipherJsTest_SE4750MR.js" />
+    <Content Include="js\cipherlab_v2\reader_api\CipherJsTest_SE4750SR.js" />
+    <Content Include="js\cipherlab_v2\reader_api\CipherJsTest_SE955.js" />
+    <Content Include="js\cipherlab_v2\reader_api\CipherJsTest_SM1.js" />
+    <Content Include="js\jquery\jquery.min.js" />
+    <Content Include="js\jquery\jquery.mobile.min.js" />
+    <Content Include="js\js_base_api.js" />
+    <Content Include="js\outcoder\ScriptExamples.js" />
+    <Content Include="js\qunit\qunit-2.4.1.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>80</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

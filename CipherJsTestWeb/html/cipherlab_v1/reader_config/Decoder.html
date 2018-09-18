@@ -1,0 +1,1237 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>Symbology Status(v1)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="../../../css/jquery/jquery.mobile.min.css"/>
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.mobile.min.js"></script>
+<script type="text/javascript" src="browserplugin_framewk.js"></script>
+
+<style type="text/css">
+    .navTextS
+    {     	
+    	font-size: small;
+    	text-decoration: none;     	       	
+    }
+    
+    .alertMsg 
+    {
+        font-size:small;
+        color:Red
+    }
+
+    .regMsg 
+    {
+        font-size:small;
+        color:blue
+    }
+</style>
+    
+<script type="text/javascript">   
+    var oJsDecodersStatus;
+    //var oJsAztec, oJsDataMatrix, oJsMaxiCode, oJsMicroPDF417, oJsMicroQR, oJsPDF417, oJsQRCode;
+
+    $(document).on("pagecreate", "#pgDecoder", function () {
+
+        if (!js.BarCodeInit()) {
+            alert("Barcode reader initialization failed");
+        }
+
+        if (!showSettingData())
+            return;
+
+        // Code 39
+        $("#slsCd39").change(function () {
+            oJsDecodersStatus.enableCode39 = $("#slsCd39").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgC39").html("Unable to save the change.");
+        });
+
+        // Code 128
+        $("#slsC128").change(function () {
+            oJsDecodersStatus.enableCode128 = $("#slsC128").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgC128").html("Unable to save the change.");
+        });
+
+        // EAN-8
+        $("#slsEAN8").change(function () {
+            oJsDecodersStatus.enableEanJan8 = $("#slsEAN8").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgEAN8").html("Unable to save the change.");
+        });
+
+        // EAN-13
+        $("#slsEAN13").change(function () {
+            oJsDecodersStatus.enableEanJan13 = $("#slsEAN13").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgEAN13").html("Unable to save the change.");
+        });
+
+        // QR Code
+        $("#slsQR").change(function () {
+            oJsDecodersStatus.enableQRcode = $("#slsQR").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgQR").html("Unable to save the change.");
+        });
+        
+        // UPC-A
+        $("#slsUPCA").change(function () {
+            oJsDecodersStatus.enableUpcA = $("#slsUPCA").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgUPCA").html("Unable to save the change.");
+        });
+
+        // UPC-E
+        $("#slsUPCE").change(function () {
+            oJsDecodersStatus.enableUpcE = $("#slsUPCE").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgUPCE").html("Unable to save the change.");
+        });
+
+        // UPC-E1
+        $("#slsUPCE1").change(function () {
+            oJsDecodersStatus.enableUpcE1 = $("#slsUPCE1").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgUPCE1").html("Unable to save the change.");
+        });
+
+        // Aztec
+        $("#slsAztec").change(function () {
+            oJsDecodersStatus.enableAztec = $("#slsAztec").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgAztec").html("Unable to save the change.");
+        });
+
+        // Composite CC-A/B
+        $("#slsCmpsAB").change(function () {
+            oJsDecodersStatus.enableCompositeCC_AB = $("#slsCmpsAB").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgCmpsAB").html("Unable to save the change.");
+        });
+
+        // Composite CC-C
+        $("#slsCmpsC").change(function () {
+            oJsDecodersStatus.enableCompositeCC_C = $("#slsCmpsC").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgCmpsC").html("Unable to save the change.");
+        });
+
+        // Composite TLC39
+        $("#slsCmpsTLC").change(function () {
+            oJsDecodersStatus.enableCompositeTlc39 = $("#slsCmpsTLC").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgCmpsTLC").html("Unable to save the change.");
+        });
+
+        // Code 11
+        $("#slsCd11").change(function () {
+            oJsDecodersStatus.enableCode11 = $("#slsCd11").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgCd11").html("Unable to save the change.");
+        });
+
+        // Code 93
+        $("#slsCd93").change(function () {
+            oJsDecodersStatus.enableCode93 = $("#slsCd93").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgC93").html("Unable to save the change.");
+        });
+
+        // CodaBar
+        $("#slsCdBr").change(function () {
+            oJsDecodersStatus.enableCodabar = $("#slsCdBr").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgCB").html("Unable to save the change.");
+        });
+
+        // Chinese 25
+        $("#slsCh25").change(function () {
+            oJsDecodersStatus.enableChinese2Of5 = $("#slsCh25").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgCh25").html("Unable to save the change.");
+        });
+
+        // Data Matrix
+        $("#slsDtMtrx").change(function () {
+            oJsDecodersStatus.enableDataMatrix = $("#slsDtMtrx").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgDtMtrx").html("Unable to save the change.");
+        });
+
+        // Netherlands KIX Code
+        $("#slsPost_NLD").change(function () {
+            oJsDecodersStatus.enableDutchPostal = $("#slsPost_NLD").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPost_NLD").html("Unable to save the change.");
+        });
+
+        // GS1-128
+        $("#slsGS1128").change(function () {
+            oJsDecodersStatus.enableGs1128 = $("#slsGS1128").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgGS1128").html("Unable to save the change.");
+        });
+
+        // GS1 DataBar-14
+        $("#slsGS1Db14").change(function () {
+            oJsDecodersStatus.enableGs1DataBar14 = $("#slsGS1Db14").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgGS1Db14").html("Unable to save the change.");
+        });
+
+        // GS1 DataBar Limited
+        $("#slsGS1DbL").change(function () {
+            oJsDecodersStatus.enableGs1DataBarLimited = $("#slsGS1DbL").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgGS1DbL").html("Unable to save the change.");
+        });
+
+        // GS1 DataBar Expanded
+        $("#slsGS1DbEx").change(function () {
+            oJsDecodersStatus.enableGs1DataBarExpanded = $("#slsGS1DbEx").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgGS1DbEx").html("Unable to save the change.");
+        });
+
+        // GS1 DataBar to UpcEan
+        $("#slsGS1DbUpEn").change(function () {
+            oJsDecodersStatus.enableGs1DatabarToUpcEan = $("#slsGS1DbUpEn").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgGS1DbUpEn").html("Unable to save the change.");
+        });
+
+        // ISBT 128
+        $("#slsISBT128").change(function () {
+            oJsDecodersStatus.enableIsbt128 = $("#slsISBT128").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgISBT128").html("Unable to save the change.");
+        });
+
+        // Discrete 25
+        $("#slsDisc25").change(function () {
+            oJsDecodersStatus.enableIndustrial2Of5 = $("#slsDisc25").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgDsc25").html("Unable to save the change.");
+        });
+
+        // Interleaved 25
+        $("#slsInt25").change(function () {
+            oJsDecodersStatus.enableInterleaved2Of5 = $("#slsInt25").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgIn25").html("Unable to save the change.");
+        });
+
+        // Japan Postal
+        $("#slsPost_JPN").change(function () {
+            oJsDecodersStatus.enableJapanPostal = $("#slsPost_JPN").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPost_JPN").html("Unable to save the change.");
+        });
+
+        // Korean 3 of 5
+        $("#slsKor35").change(function () {
+            oJsDecodersStatus.enableKorean3Of5 = $("#slsKor35").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgKor35").html("Unable to save the change.");
+        });
+
+        // Australian Postal
+        $("#slsPost_AUS").change(function () {
+            oJsDecodersStatus.enableAustralianPostal = $("#slsPost_AUS").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPost_AUS").html("Unable to save the change.");
+        });
+
+        // Matrix 25
+        $("#slsMtx25").change(function () {
+            oJsDecodersStatus.enableMatrix2Of5 = $("#slsMtx25").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgMtx25").html("Unable to save the change.");
+        });
+
+        // MaxiCode
+        $("#slsMxCd").change(function () {
+            oJsDecodersStatus.enableMaxiCode = $("#slsMxCd").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgMxCd").html("Unable to save the change.");
+        });
+
+        // MicroPDF417
+        $("#slsMcrPdf").change(function () {
+            oJsDecodersStatus.enableMicroPDF417 = $("#slsMcrPdf").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgMcrPdf").html("Unable to save the change.");
+        });
+
+        // MicroQR
+        $("#slsMcrQR").change(function () {
+            oJsDecodersStatus.enableMicroQR = $("#slsMcrQR").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgMcrPdf").html("Unable to save the change.");
+        });
+
+        // MSI
+        $("#slsMSI").change(function () {
+            oJsDecodersStatus.enableMsi = $("#slsMSI").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgMSI").html("Unable to save the change.");
+        });
+
+        // PDF417
+        $("#slsPdf").change(function () {
+            oJsDecodersStatus.enablePDF417 = $("#slsPdf").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPdf").html("Unable to save the change.");
+        });
+
+        // Trioptic Code 39
+        $("#slsTrpC39").change(function () {
+            oJsDecodersStatus.enableTriopticCode39 = $("#slsTrpC39").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgTrpC39").html("Unable to save the change.");
+        });
+
+        // Coupon Code
+        $("#slsCpn").change(function () {
+            oJsDecodersStatus.enableUccCoupon = $("#slsCpn").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgCpn").html("Unable to save the change.");
+        });
+
+        // UK Postal
+        $("#slsPost_UK").change(function () {
+            oJsDecodersStatus.enableUKPostal = $("#slsPost_UK").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPost_UK").html("Unable to save the change.");
+        });
+
+        // UPU FICS Postal
+        $("#slsPost_UPU").change(function () {
+            oJsDecodersStatus.enableUPUFICSPostal = $("#slsPost_UPU").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPost_UPU").html("Unable to save the change.");
+        });
+
+        // US Postnet
+        $("#slsPost_USpos").change(function () {
+            oJsDecodersStatus.enableUSPostnet = $("#slsPost_USpos").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPost_USpos").html("Unable to save the change.");
+        });
+
+        // US Planet
+        $("#slsPost_USpla").change(function () {
+            oJsDecodersStatus.enableUSPlanet = $("#slsPost_USpla").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPost_USpla").html("Unable to save the change.");
+        });
+
+        // USPS Postal
+        $("#slsPost_USPS").change(function () {
+            oJsDecodersStatus.enableUSPSPostal = $("#slsPost_USPS").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPost_USPS").html("Unable to save the change.");
+        });
+
+        // Plessey
+        $("#slsPlsy").change(function () {
+            oJsDecodersStatus.enablePlessey = $("#slsPlsy").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPlsy").html("Unable to save the change.");
+        });
+
+        // Telepen
+        $("#slsTlpn").change(function () {
+            oJsDecodersStatus.enablePlessey = $("#slsTlpn").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgTlpn").html("Unable to save the change.");
+        });
+
+        // 
+        /*
+        $("#slsPost_UK").change(function () {
+            oJsDecodersStatus.enableCompositeCC_AB = ($("#slsPost_UK").val();
+            if (!js.BarCodeSetDecodersStatus(oJsDecodersStatus))
+                $("#spMsgPost_UK").html("Unable to save the change.");
+        }); */                 
+
+
+        /*
+        $('#btnSave').click(function() {
+            $("#spMsg").html = "";
+            var bSuccess = true, sErrMsg = "Unable to save changes to ";
+
+            //alert("start saving...");
+
+            // Aztec            
+            oJsAztec.enable = $("#slsAztec").val();
+            //alert("bfr save: oJsAztec: " + JSON.stringify(oJsAztec));
+            if (!js.BarCodeSetSymbology(oJsAztec)) {
+                sErrMsg += "Aztec";
+                bSuccess = false;
+            }
+
+            // Data Matrix 
+            oJsDataMatrix.enable = $("#slsDtMtrx").val();
+            oJsDataMatrix.mirrorImage = $("#selDtMtrx_DcMrImg").val();
+            oJsDataMatrix.fieldSeparator = $("#txtDtMtrx_SprChar").val().charCodeAt(0);
+            if (!js.BarCodeSetSymbology(oJsDataMatrix)) {
+                sErrMsg += ", Data Matrix";
+                bSuccess = false;
+            }
+
+            // MaxiCode
+            oJsMaxiCode.enable = $("#slsMxCd").val();
+            if (!js.BarCodeSetDecodersStatus(oJsMaxiCode)) {
+                sErrMsg += ", MaxiCode";
+                bSuccess = false;
+            }
+
+            // MicroPDF417
+            oJsMicroPDF417.enable = $("#slsMcrPdf").val();
+            oJsMicroPDF417.code128Emulation = $("#chxMcrPdf_C128Emu").prop("checked");
+            if (!js.BarCodeSetSymbology(oJsMicroPDF417)) {
+                sErrMsg += ", MicroPDF417";
+                bSuccess = false;
+            }
+
+            //MicroQR
+            oJsMicroQR.enable = $("#slsMcrQR").val();
+            if (!js.BarCodeSetSymbology(oJsMicroQR)) {
+                sErrMsg += ", MicroQR";
+                bSuccess = false;
+            }
+
+            // PDF417
+            oJsPDF417.enable = $("#slsPdf").val();
+            //alert("PDF417: " + JSON.stringify(js.BarCodeGetSymbology("PDF417")));
+            //alert("saving oJsPDF417: " + JSON.stringify(oJsPDF417));
+            if (!js.BarCodeSetSymbology(oJsPDF417)) {
+                alert("failed to save oJsPDF417");
+                sErrMsg += ", PDF417";
+                bSuccess = false;
+            }
+
+            // QR Code
+            oJsQRCode.enable = $("#slsQR").val();
+            if (!js.BarCodeSetSymbology(oJsQRCode)) {
+                sErrMsg += ", QR Code";
+                bSuccess = false;
+            }
+
+            if (bSuccess) {
+                $("#spMsg").html("The changes have been saved successfully.");
+            }
+            else {
+                $("#spMsg").html(sErrMsg + " section(s).");
+            }
+        }); */
+
+    });
+   
+    function showSettingData() {
+
+        //alert("showSettingData...");        
+
+        oJsDecodersStatus = js.BarCodeGetDecodersStatus();
+        if (oJsDecodersStatus == null) {
+            alert("Unable to get decoder status.");
+            return false;
+        }
+
+        //alert("oJsDecodersStatus=" + JSON.stringify(oJsDecodersStatus).replace(/,"/g, "\n"));
+
+        // Code 39
+        if (typeof (oJsDecodersStatus["enableCode39"]) === 'undefined' || oJsDecodersStatus.enableCode39 == -1)
+            $("#slsCd39").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsCd39").val(oJsDecodersStatus.enableCode39).slider('refresh');       
+
+        // Code 128
+        if (typeof (oJsDecodersStatus["enableCode128"]) === 'undefined' || oJsDecodersStatus.enableCode128 == -1)
+            $("#slsC128").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsC128").val(oJsDecodersStatus.enableCode128).slider('refresh');       
+
+        // EAN-8
+        if (typeof (oJsDecodersStatus["enableEanJan8"]) === 'undefined' || oJsDecodersStatus.enableEanJan8 == -1)
+            $("#slsEAN8").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsEAN8").val(oJsDecodersStatus.enableEanJan8).slider('refresh');
+   
+        // EAN-13
+        if (typeof (oJsDecodersStatus["enableEanJan13"]) === 'undefined' || oJsDecodersStatus.enableEanJan13 == -1)
+            $("#slsEAN13").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsEAN13").val(oJsDecodersStatus.enableEanJan13).slider('refresh');   
+
+        // QR Code
+        if (typeof (oJsDecodersStatus["enableQRcode"]) === 'undefined' || oJsDecodersStatus.enableQRcode == -1)
+            $("#slsQR").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsQR").val(oJsDecodersStatus.enableQRcode).slider('refresh'); 
+
+        // UPC-A
+        if (typeof (oJsDecodersStatus["enableUpcA"]) === 'undefined' || oJsDecodersStatus.enableUpcA == -1)
+            $("#slsUPCA").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsUPCA").val(oJsDecodersStatus.enableUpcA).slider('refresh');    
+
+        // UPC-E
+        if (typeof (oJsDecodersStatus["enableUpcE"]) === 'undefined' || oJsDecodersStatus.enableUpcE == -1)
+            $("#slsUPCE").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsUPCE").val(oJsDecodersStatus.enableUpcE).slider('refresh');   
+
+        // UPC-E1
+        if (typeof (oJsDecodersStatus["enableUpcE1"]) === 'undefined' || oJsDecodersStatus.enableUpcE1 == -1)
+            $("#slsUPCE1").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsUPCE1").val(oJsDecodersStatus.enableUpcE1).slider('refresh');
+
+        // Aztec 
+        if (typeof (oJsDecodersStatus["enableAztec"]) === 'undefined' || oJsDecodersStatus.enableAztec == -1)
+            $("#slsAztec").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsAztec").val(oJsDecodersStatus.enableAztec).slider('refresh');    
+        
+        // Composite CC-A/B
+        if (typeof (oJsDecodersStatus["enableCompositeCC_AB"]) === 'undefined' || oJsDecodersStatus.enableCompositeCC_AB == -1)
+            $("#slsCmpsAB").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsCmpsAB").val(oJsDecodersStatus.enableCompositeCC_AB).slider('refresh');    
+        
+        //Composite CC-C
+        if (typeof (oJsDecodersStatus["enableCompositeCC_C"]) === 'undefined' || oJsDecodersStatus.enableCompositeCC_C == -1)
+            $("#slsCmpsC").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsCmpsC").val(oJsDecodersStatus.enableCompositeCC_C).slider('refresh');      
+        
+        //Composite TLC39
+        if (typeof (oJsDecodersStatus["enableCompositeTlc39"]) === 'undefined' || oJsDecodersStatus.enableCompositeTlc39 == -1)
+            $("#slsCmpsTLC").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsCmpsTLC").val(oJsDecodersStatus.enableCompositeTlc39).slider('refresh');    
+        
+        // Code 11 
+        if (typeof (oJsDecodersStatus["enableCode11"]) === 'undefined' || oJsDecodersStatus.enableCode11 == -1)
+            $("#slsCd11").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsCd11").val(oJsDecodersStatus.enableCode11).slider('refresh');    
+
+        // Code 93
+        if (typeof (oJsDecodersStatus["enableCode93"]) === 'undefined' || oJsDecodersStatus.enableCode93 == -1)
+            $("#slsCd93").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsCd93").val(oJsDecodersStatus.enableCode93).slider('refresh');      
+
+        // CodaBar
+        if (typeof (oJsDecodersStatus["enableCodabar"]) === 'undefined' || oJsDecodersStatus.enableCodabar == -1)
+            $("#slsCdBr").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsCdBr").val(oJsDecodersStatus.enableCodabar).slider('refresh');     
+        
+        // Chinese 25
+        if (typeof (oJsDecodersStatus["enableChinese2Of5"]) === 'undefined' || oJsDecodersStatus.enableChinese2Of5 == -1)
+            $("#slsCh25").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsCh25").val(oJsDecodersStatus.enableChinese2Of5).slider('refresh');
+
+        // Data Matrix
+        if (typeof (oJsDecodersStatus["enableDataMatrix"]) === 'undefined' || oJsDecodersStatus.enableDataMatrix == -1)
+            $("#slsDtMtrx").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsDtMtrx").val(oJsDecodersStatus.enableDataMatrix).slider('refresh');       
+
+        // Netherlands KIX Code
+        if (typeof (oJsDecodersStatus["enableDutchPostal"]) === 'undefined' || oJsDecodersStatus.enableDutchPostal == -1)
+            $("#slsPost_NLD").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsPost_NLD").val(oJsDecodersStatus.enableDutchPostal).slider('refresh');      
+        
+        // GS1-128
+        if (typeof (oJsDecodersStatus["enableGs1128"]) === 'undefined' || oJsDecodersStatus.enableGs1128 == -1)
+            $("#slsGS1128").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsGS1128").val(oJsDecodersStatus.enableGs1128).slider('refresh');    
+
+        // GS1 DataBar-14
+        if (typeof (oJsDecodersStatus["enableGs1DataBar14"]) === 'undefined' || oJsDecodersStatus.enableGs1DataBar14 == -1)
+            $("#slsGS1Db14").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsGS1Db14").val(oJsDecodersStatus.enableGs1DataBar14).slider('refresh');   
+
+        // GS1 DataBar Limited
+        if (typeof (oJsDecodersStatus["enableGs1DataBarLimited"]) === 'undefined' || oJsDecodersStatus.enableGs1DataBarLimited == -1)
+            $("#slsGS1DbL").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsGS1DbL").val(oJsDecodersStatus.enableGs1DataBarLimited).slider('refresh');    
+        
+        // GS1 DataBar Expanded
+        if (typeof (oJsDecodersStatus["enableGs1DataBarExpanded"]) === 'undefined' || oJsDecodersStatus.enableGs1DataBarExpanded == -1)
+            $("#slsGS1DbEx").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsGS1DbEx").val(oJsDecodersStatus.enableGs1DataBarExpanded).slider('refresh');     
+
+        // GS1 DataBar to UpcEan
+        if (typeof (oJsDecodersStatus["enableGs1DatabarToUpcEan"]) === 'undefined' || oJsDecodersStatus.enableGs1DatabarToUpcEan == -1)
+            $("#slsGS1DbUpEn").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsGS1DbUpEn").val(oJsDecodersStatus.enableGs1DatabarToUpcEan).slider('refresh');      
+        
+        // ISBT 128
+        if (typeof (oJsDecodersStatus["enableIsbt128"]) === 'undefined' || oJsDecodersStatus.enableIsbt128 == -1)
+            $("#slsISBT128").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsISBT128").val(oJsDecodersStatus.enableIsbt128).slider('refresh');     
+        
+        // Discrete 25
+        if (typeof (oJsDecodersStatus["enableIndustrial2Of5"]) === 'undefined' || oJsDecodersStatus.enableIndustrial2Of5 == -1)
+            $("#slsDisc25").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsDisc25").val(oJsDecodersStatus.enableIndustrial2Of5).slider('refresh');       
+        
+        // Interleaved 25 
+        if (typeof (oJsDecodersStatus["enableInterleaved2Of5"]) === 'undefined' || oJsDecodersStatus.enableInterleaved2Of5 == -1)
+            $("#slsInt25").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsInt25").val(oJsDecodersStatus.enableInterleaved2Of5).slider('refresh');       
+        
+        // Japan Postal
+        if (typeof (oJsDecodersStatus["enableJapanPostal"]) === 'undefined' || oJsDecodersStatus.enableJapanPostal == -1)
+            $("#slsPost_JPN").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsPost_JPN").val(oJsDecodersStatus.enableJapanPostal).slider('refresh');       
+
+        // Korean 3 of 5
+        if (typeof (oJsDecodersStatus["enableKorean3Of5"]) === 'undefined' || oJsDecodersStatus.enableKorean3Of5 == -1)
+            $("#slsKor35").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsKor35").val(oJsDecodersStatus.enableKorean3Of5).slider('refresh');       
+
+        // Australian Postal
+        if (typeof (oJsDecodersStatus["enableAustralianPostal"]) === 'undefined' || oJsDecodersStatus.enableAustralianPostal == -1)
+            $("#slsPost_AUS").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsPost_AUS").val(oJsDecodersStatus.enableAustralianPostal).slider('refresh');      
+
+        // Matrix 25
+        if (typeof (oJsDecodersStatus["enableMatrix2Of5"]) === 'undefined' || oJsDecodersStatus.enableMatrix2Of5 == -1)
+            $("#slsMtx25").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsMtx25").val(oJsDecodersStatus.enableMatrix2Of5).slider('refresh');       
+
+        // MaxiCode
+        if (typeof (oJsDecodersStatus["enableMaxiCode"]) === 'undefined' || oJsDecodersStatus.enableMaxiCode == -1)
+            $("#slsMxCd").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsMxCd").val(oJsDecodersStatus.enableMaxiCode).slider('refresh');     
+        
+        // MicroPDF417
+        if (typeof (oJsDecodersStatus["enableMicroPDF417"]) === 'undefined' || oJsDecodersStatus.enableMicroPDF417 == -1)
+            $("#slsMcrPdf").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsMcrPdf").val(oJsDecodersStatus.enableMicroPDF417).slider('refresh');     
+
+        // MicroQR
+        if (typeof (oJsDecodersStatus["enableMicroQR"]) === 'undefined' || oJsDecodersStatus.enableMicroQR == -1)
+            $("#slsMcrQR").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsMcrQR").val(oJsDecodersStatus.enableMicroQR).slider('refresh');       
+
+        // MSI
+        if (typeof (oJsDecodersStatus["enableMsi"]) === 'undefined' || oJsDecodersStatus.enableMsi == -1)
+            $("#slsMSI").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsMSI").val(oJsDecodersStatus.enableMsi).slider('refresh');    
+        
+        // PDF417
+        if (typeof (oJsDecodersStatus["enablePDF417"]) === 'undefined' || oJsDecodersStatus.enablePDF417 == -1)
+            $("#slsPdf").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsPdf").val(oJsDecodersStatus.enablePDF417).slider('refresh');       
+
+        // Trioptic Code 39
+        if (typeof (oJsDecodersStatus["enableTriopticCode39"]) === 'undefined' || oJsDecodersStatus.enableTriopticCode39 == -1)
+            $("#slsTrpC39").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsTrpC39").val(oJsDecodersStatus.enableTriopticCode39).slider('refresh');       
+
+        // Coupon Code
+        if (typeof (oJsDecodersStatus["enableUccCoupon"]) === 'undefined' || oJsDecodersStatus.enableUccCoupon == -1)
+            $("#slsCpn").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsCpn").val(oJsDecodersStatus.enableUccCoupon).slider('refresh');       
+        
+        // UK Postal
+        if (typeof (oJsDecodersStatus["enableUKPostal"]) === 'undefined' || oJsDecodersStatus.enableUKPostal == -1)
+            $("#slsPost_UK").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsPost_UK").val(oJsDecodersStatus.enableUKPostal).slider('refresh');     
+
+        // UPU FICS Postal
+        if (typeof (oJsDecodersStatus["enableUPUFICSPostal"]) === 'undefined' || oJsDecodersStatus.enableUPUFICSPostal == -1)
+            $("#slsPost_UPU").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsPost_UPU").val(oJsDecodersStatus.enableUPUFICSPostal).slider('refresh');
+     
+        // US Postnet
+        if (typeof (oJsDecodersStatus["enableUSPostnet"]) === 'undefined' || oJsDecodersStatus.enableUSPostnet == -1)
+            $("#slsPost_USpos").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsPost_USpos").val(oJsDecodersStatus.enableUSPostnet).slider('refresh');      
+        
+        // US Planet
+        if (typeof (oJsDecodersStatus["enableUSPlanet"]) === 'undefined' || oJsDecodersStatus.enableUSPlanet == -1)
+            $("#slsPost_USpla").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsPost_USpla").val(oJsDecodersStatus.enableUSPlanet).slider('refresh');      
+
+        // USPS Postal
+        if (typeof (oJsDecodersStatus["enableUSPSPostal"]) === 'undefined' || oJsDecodersStatus.enableUSPSPostal == -1)
+            $("#slsPost_USPS").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsPost_USPS").val(oJsDecodersStatus.enableUSPSPostal).slider('refresh');      
+
+        // Plessey
+        //alert("typeof (oJsDecodersStatus[enablePlessey])=" + typeof (oJsDecodersStatus["enablePlessey"]));
+        if (typeof (oJsDecodersStatus["enablePlessey"]) === 'undefined' || oJsDecodersStatus.enablePlessey == -1) {
+            //alert("slsPlsy disabled bfr = " + $("#slsPlsy").prop('disabled'));
+            $("#slsPlsy").prop('disabled', 'disabled').slider('refresh');
+            //alert("slsPlsy disabled aft = " + $("#slsPlsy").prop('disabled'));
+            //$("#slsPlsy").flipswitch("disable");
+            //$("#slsPlsy").flipswitch("option", "disabled", true);
+        }          
+        else        
+            $("#slsPlsy").val(oJsDecodersStatus.enablePlessey).slider('refresh');        
+
+        // Telepen
+        if (typeof (oJsDecodersStatus["enableTelepen"]) === 'undefined' || oJsDecodersStatus.enableTelepen == -1)            
+            $("#slsTlpn").prop('disabled', 'disabled').slider('refresh');
+        else
+            $("#slsTlpn").val(oJsDecodersStatus.enableTelepen).slider('refresh');
+      
+
+        /*
+        // Aztec         
+        oJsAztec = js.BarCodeGetSymbology("Aztec");
+        //alert(JSON.stringify(oJsAztec));
+        $("#slsAztec").val(oJsAztec.enable).slider('refresh');
+
+        // Data Matrix 
+        oJsDataMatrix = js.BarCodeGetSymbology("DataMatrix");
+        //alert(JSON.stringify(oJsDataMatrix));
+        $("#slsDtMtrx").val(oJsDataMatrix.enable).slider('refresh');
+        $("#selDtMtrx_DcMrImg").val(oJsDataMatrix.mirrorImage).change();
+        $("#txtDtMtrx_SprChar").val(String.fromCharCode(oJsDataMatrix.fieldSeparator));
+
+        // MaxiCode        
+        oJsMaxiCode = js.BarCodeGetSymbology("MaxiCode");
+        //alert(JSON.stringify(oJsMaxiCode));        
+        $("#slsMxCd").val(oJsMaxiCode.enable).slider('refresh');
+        
+        // MicroPDF417
+        oJsMicroPDF417 = js.BarCodeGetSymbology("MicroPDF417");
+        $("#slsMcrPdf").val(oJsMicroPDF417.enable).slider('refresh');
+        $("#chxMcrPdf_C128Emu").prop("checked", oJsMicroPDF417.code128Emulation).checkboxradio("refresh");
+        
+        //MicroQR       
+        oJsMicroQR = js.BarCodeGetSymbology("MicroQR");
+        $("#slsMcrQR").val(oJsMicroQR.enable).slider('refresh');
+      
+        // PDF417
+        oJsPDF417 = js.BarCodeGetSymbology("PDF417");
+        $("#slsPdf").val(oJsPDF417.enable).slider('refresh');
+        
+        // QR Code
+        oJsQRCode = js.BarCodeGetSymbology("QRCode");
+        $("#slsQR").val(oJsQRCode.enable).slider('refresh');
+        */
+
+        return true;        
+    }
+
+    function testSymbologies() {
+        alert("testSymbologies...");
+        /*
+        alert("CodaBar: " + JSON.stringify(js.BarCodeGetSymbology("Codabar")));
+        alert("Code 11: " + JSON.stringify(js.BarCodeGetSymbology("Code11")));
+        alert("Code 39: " + JSON.stringify(js.BarCodeGetSymbology("Code39")));
+        alert("Code 93: " + JSON.stringify(js.BarCodeGetSymbology("Code93")));
+        alert("Code128: " + JSON.stringify(js.BarCodeGetSymbology("Code128")));
+        alert("GS1128: " + JSON.stringify(js.BarCodeGetSymbology("GS1128")));
+        alert("ISBT128: " + JSON.stringify(js.BarCodeGetSymbology("ISBT128")));
+        alert("Chinese2Of5: " + JSON.stringify(js.BarCodeGetSymbology("Chinese2Of5")));
+        alert("Industrial2Of5: " + JSON.stringify(js.BarCodeGetSymbology("Industrial2Of5")));
+        alert("Interleaved2Of5: " + JSON.stringify(js.BarCodeGetSymbology("Interleaved2Of5")));
+        alert("Matrix2Of5: " + JSON.stringify(js.BarCodeGetSymbology("Matrix2Of5")));
+        alert("Composite: " + JSON.stringify(js.BarCodeGetSymbology("Composite"))); */
+
+        var oDataBar14 = js.BarCodeGetSymbology("GS1DataBar14");
+        alert("ini GS1DataBar14: " + JSON.stringify(oDataBar14) + "\nconvertToUpcEan=" + oDataBar14.convertToUpcEan);
+        
+        alert("bfr: set GS1DataBar14.convertToUpcEan=" + (!oDataBar14.convertToUpcEan));
+        oDataBar14.convertToUpcEan = (!oDataBar14.convertToUpcEan);
+        js.BarCodeSetSymbology(oDataBar14);
+        var oDataBar14_1 = js.BarCodeGetSymbology("GS1DataBar14");
+        alert("afr: GS1DataBar14.convertToUpcEan=" + oDataBar14_1.convertToUpcEan);
+
+        /*
+        alert("GS1DataBarLimited: " + JSON.stringify(js.BarCodeGetSymbology("GS1DataBarLimited")));
+        alert("GS1DataBarExpanded: " + JSON.stringify(js.BarCodeGetSymbology("GS1DataBarExpanded")));
+        alert("Korean3Of5: " + JSON.stringify(js.BarCodeGetSymbology("Korean3Of5")));
+        alert("Msi: " + JSON.stringify(js.BarCodeGetSymbology("Msi")));
+        alert("AustralianPostal: " + JSON.stringify(js.BarCodeGetSymbology("AustralianPostal")));
+        alert("JapanPostal: " + JSON.stringify(js.BarCodeGetSymbology("JapanPostal")));
+        alert("DutchPostal: " + JSON.stringify(js.BarCodeGetSymbology("DutchPostal")));
+        alert("USPostal: " + JSON.stringify(js.BarCodeGetSymbology("USPostal")));
+        alert("USPSPostal: " + JSON.stringify(js.BarCodeGetSymbology("USPSPostal")));
+        alert("UPUFICSPostal: " + JSON.stringify(js.BarCodeGetSymbology("UPUFICSPostal")));
+        alert("UKPostal: " + JSON.stringify(js.BarCodeGetSymbology("UKPostal")));
+        alert("Ean8: " + JSON.stringify(js.BarCodeGetSymbology("Ean8")));
+        alert("Ean13: " + JSON.stringify(js.BarCodeGetSymbology("Ean13")));
+        alert("UpcA: " + JSON.stringify(js.BarCodeGetSymbology("UpcA")));
+        alert("UpcE: " + JSON.stringify(js.BarCodeGetSymbology("UpcE")));
+        alert("UpcE1: " + JSON.stringify(js.BarCodeGetSymbology("UpcE1")));
+        alert("UccCoupon: " + JSON.stringify(js.BarCodeGetSymbology("UccCoupon"))); */
+
+        /*
+        alert("DutchPostal: " + JSON.stringify(js.BarCodeGetSymbology("DutchPostal")));        
+        alert("2d: Aztec: " + JSON.stringify(js.BarCodeGetSymbology("Aztec")));        
+        alert("2d: DataMatrix: " + JSON.stringify(js.BarCodeGetSymbology("DataMatrix")));
+        alert("2d: MaxiCode: " + JSON.stringify(js.BarCodeGetSymbology("MaxiCode")));
+        alert("2d: MicroPDF417: " + JSON.stringify(js.BarCodeGetSymbology("MicroPDF417")));
+        alert("2d: MicroQR: " + JSON.stringify(js.BarCodeGetSymbology("MicroQR")));
+        alert("2d: PDF417: " + JSON.stringify(js.BarCodeGetSymbology("PDF417")));
+        alert("2d: QRCode: " + JSON.stringify(js.BarCodeGetSymbology("QRCode"))); */        
+    }
+
+</script>
+</head>
+
+<body>
+    <div data-role="page" id="pgDecoder">
+
+        <div data-role="header">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                    <td width="15%">&nbsp;<&nbsp;<a class="navTextS" href="ReaderCfgIndex.html">Home</a></td>
+                    <td style="text-align: center; font-size:16pt">Decoders</td>
+                    <td width="15%"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div data-role="main" class="ui-content">            
+            <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsCd39"><b>Code 39</b>:</label>
+                            <select id="slsCd39" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgC39" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsC128"><b>Code 128</b>:</label>
+                            <select id="slsC128" data-role="slider">
+                                <option value="0">Off</option>
+                                <option value="1">On</option>
+                            </select></div></td></tr>              
+                <tr><td><span id="spMsgC128" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsEAN8"><b>EAN-8</b>:</label>
+                            <select id="slsEAN8" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgEAN8" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsEAN13"><b>EAN-13</b>:</label>
+                            <select id="slsEAN13" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgEAN13" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsQR"><b>QR Code</b>:</label>
+                            <select id="slsQR" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr> 
+                <tr><td><span id="spMsgQR" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsUPCA"><b>UPC-A</b>:</label>
+                            <select id="slsUPCA" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgUPCA" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsUPCE"><b>UPC-E</b>:</label>
+                            <select id="slsUPCE" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgUPCE" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain"  style="padding:0"><label for="slsUPCE1"><b>UPC-E1</b>:</label>
+                            <select id="slsUPCE1" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgUPCE1" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain">
+                            <label for="slsAztec"><b>Aztec</b>:</label>
+                            <select id="slsAztec" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgAztec" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsCmpsAB"><b>Composite CC-A/B</b>:</label>
+                            <select id="slsCmpsAB" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgCmpsAB" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsCmpsC"><b>Composite CC-C</b>:</label>
+                            <select id="slsCmpsC" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgCmpsC" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsCmpsTLC"><b>Composite TLC39</b>:</label>
+                            <select id="slsCmpsTLC" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgCmpsTLC" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsCd11"><b>Code 11</b>:</label>
+                            <select id="slsCd11" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgCd11" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+                
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsCd93"><b>Code 93</b>:</label>
+                            <select id="slsCd93" data-role="slider">
+                                <option value="0">Off</option>
+                                <option value="1">On</option></select></div></td></tr>
+                <tr><td><span id="spMsgC93" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsCdBr"><b>CodaBar</b>:</label>
+                            <select id="slsCdBr" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgCB" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsCh25"><b>Chinese 25</b>:</label>
+                            <select id="slsCh25" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgCh25" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsDtMtrx"><b>Data Matrix</b>:</label>
+                            <select id="slsDtMtrx" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgDtMtrx" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsPost_NLD"><b>Netherlands KIX Code</b>:</label>
+                            <select id="slsPost_NLD" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgPost_NLD" class="regMsg"></span></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsGS1128"><b>GS1-128</b>:</label>
+                            <select id="slsGS1128" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgGS1128" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsGS1Db14"><b>GS1 DataBar-14</b>:</label>
+                            <select id="slsGS1Db14" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgGS1Db14" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsGS1DbL"><b>GS1 DataBar Limited</b>:</label>
+                            <select id="slsGS1DbL" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgGS1DbL" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsGS1DbEx"><b>GS1 DataBar Expanded</b>:</label>
+                            <select id="slsGS1DbEx" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgGS1DbEx" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr>
+                    <td>
+                        <div data-role="fieldcontain" style="padding:0">
+                            <label for="slsGS1DbUpEn"><b>GS1 DataBar to UpcEan</b>:</label>
+                            <select id="slsGS1DbUpEn" data-role="slider">
+                                <option value="0">Off</option>
+                                <option value="1">On</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td><span id="spMsgGS1DbUpEn" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsISBT128"><b>ISBT 128</b>:</label>
+                            <select id="slsISBT128" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgISBT128" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsDisc25"><b>Discrete 25</b>:</label>
+                            <select id="slsDisc25" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgDsc25" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsInt25"><b>Interleaved 25</b>:</label>
+                            <select id="slsInt25" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgIn25" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsPost_JPN"><b>Japan Postal</b>:</label>
+                            <select id="slsPost_JPN" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgPost_JPN" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsKor35"><b>Korean 3 of 5</b>:</label>
+                            <select id="slsKor35" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgKor35" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr>
+                    <td>
+                        <div data-role="fieldcontain" style="padding:0">
+                            <label for="slsPost_AUS"><b>Australian Postal</b>:</label>
+                            <select id="slsPost_AUS" data-role="slider">
+                                <option value="0">Off</option>
+                                <option value="1">On</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td><span id="spMsgPost_AUS" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsMtx25"><b>Matrix 25</b>:</label>
+                            <select id="slsMtx25" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgMtx25" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsMxCd"><b>MaxiCode</b>:</label>
+                            <select id="slsMxCd" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgMxCd" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsMcrPdf"><b>MicroPDF417</b>:</label>
+                            <select id="slsMcrPdf" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgMcrPdf" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsMcrQR"><b>MicroQR</b>:</label>
+                            <select id="slsMcrQR" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgMcrPdf" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsMSI"><b>MSI</b>:</label>
+                            <select id="slsMSI" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgMSI" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsPdf"><b>PDF417</b>:</label>
+                            <select id="slsPdf" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgPdf" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsTrpC39"><b>Trioptic Code 39</b>:</label>
+                            <select id="slsTrpC39" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgTrpC39" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0"><label for="slsCpn"><b>Coupon Code</b>:</label>
+                            <select id="slsCpn" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgCpn" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsPost_UK"><b>UK Postal</b>:</label>
+                            <select id="slsPost_UK" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgPost_UK" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsPost_UPU"><b>UPU FICS Postal</b>:</label>
+                            <select id="slsPost_UPU" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgPost_UPU" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsPost_USpos"><b>US Postnet</b>:</label>
+                            <select id="slsPost_USpos" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgPost_USpos" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsPost_USpla"><b>US Planet</b>:</label>
+                            <select id="slsPost_USpla" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgPost_USpla" class="regMsg"></span></td></tr>
+                <tr><td height="10px"></td></tr>
+
+                <tr><td><div data-role="fieldcontain" style="padding:0">
+                            <label for="slsPost_USPS"><b>USPS Postal</b>:</label>
+                            <select id="slsPost_USPS" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><span id="spMsgPost_USPS" class="regMsg"></span></td></tr>
+
+                <tr>
+                    <td>
+                        <div data-role="fieldcontain" style="padding:0">
+                            <label for="slsPlsy"><b>Plessey</b>:</label>
+                            <select id="slsPlsy" data-role="slider" >
+                                <option value="0">Off</option>
+                                <option value="1">On</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td><span id="spMsgPlsy" class="regMsg"></span></td></tr>
+
+                <tr>
+                    <td>
+                        <div data-role="fieldcontain" style="padding:0">
+                            <label for="slsTlpn"><b>Telepen</b>:</label>
+                            <select id="slsTlpn" data-role="slider">
+                                <option value="0">Off</option>
+                                <option value="1">On</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td><span id="spMsgTlpn"" class="regMsg"></span></td></tr>
+
+                <!--tr><td><div data-role="fieldcontain">
+                            <label for="slsAztec"><b>Aztec</b>:</label>
+                            <select id="slsAztec" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></!--tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsDtMtrx"><b>Data Matrix</b>:</label>
+                            <select id="slsDtMtrx" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><div data-role="collapsible" id="dvDtMtrx">
+                            <h1>Data Matrix Detail</h1>
+                            <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                                <tr><td><label for="selDtMtrx_DcMrImg"><b>Decode Mirror Image:</b></label>
+                                        <select id="selDtMtrx_DcMrImg">
+                                            <option value="0">Never</option>
+                                            <option value="1">Always</option>
+                                            <option value="2">Auto-discriminate</option>
+                                        </select></td></tr>
+                                <tr><td><label for="txtDtMtrx_SprChar"><b>Separator Character (FNC1)</b></label>
+                                        <input type="text" id="txtDtMtrx_SprChar" /></td></tr></table></div></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsMxCd"><b>MaxiCode</b>:</label>
+                            <select id="slsMxCd" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsMcrPdf"><b>MicroPDF417</b>:</label>
+                            <select id="slsMcrPdf" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+                <tr><td><div data-role="collapsible" id="dvMcrPdf">
+                            <h1>MicroPDF417 Detail</h1>
+                            <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                                <tr><td><label for="chxMcrPdf_C128Emu">Code 128 Emulation</label>
+                                        <input type="checkbox" id="chxMcrPdf_C128Emu" /></td></tr></table></div></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsMcrQR"><b>MicroQR</b>:</label>
+                            <select id="slsMcrQR" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>                
+                
+                <tr><td><div data-role="fieldcontain"><label for="slsPdf"><b>PDF417</b>:</label>
+                            <select id="slsPdf" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr>
+
+                <tr><td><div data-role="fieldcontain"><label for="slsQR"><b>QR Code</b>:</label>
+                            <select id="slsQR" data-role="slider">
+                                <option value="0">Off</option><option value="1">On</option>
+                            </select></div></td></tr-->               
+
+                <!--tr><td height="3px"></td></!--tr>
+                <tr><td colspan="2"><span id="spMsg" class="regMsg"></span></td></tr>                
+                <tr><td colspan="2"><input id="btnSave" type="button" value="Apply" /></td></tr-->
+
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>
+

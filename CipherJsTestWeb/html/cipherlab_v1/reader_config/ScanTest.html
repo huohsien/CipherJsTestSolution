@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>ReaderConfig(v1)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="jquery.mobile.min.css">
+<script type="text/javascript" src="browserplugin_framewk.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.mobile.min.js"></script>
+<style type="text/css">
+    .navTextS
+    {     	
+    	font-size: small;
+    	text-decoration: none;     	       	
+    }
+    
+    .alertMsg 
+    {
+        font-size:small;
+        color:Red
+    }
+
+    .regMsg 
+    {
+        font-size:small;
+        color:blue
+    }
+
+    .txtAreaAuto {
+      height: auto !important; /* !important is used to force override. */
+    }
+
+</style>
+    
+<script type="text/javascript">   
+
+    $(document).on("pagecreate", "#pgScanTest", function () {
+        
+        if (!js.BarCodeInit()) {
+            alert("Barcode reader initialization failed");
+        }
+
+        js.BarCodeSetCallBack('getReaderData');
+        
+        $("#btnClear").click(function () {
+            $("#txaScanResult").val("");
+            //$("#spMsg").html("");
+        });
+
+        $('#selTrggrMod').change(function () {
+            //alert("selTrggrMod=" + $("#selTrggrMod").val());
+            if ($("#selTrggrMod").val() == "s") {
+                $("#dvScnBtn").show();
+            }
+            else {
+                $("#dvScnBtn").hide();
+            }
+        });
+
+        $('#btnScan').click(function () {
+            //js.BarCodeSetCallBack('getReaderData');
+            js.BarCodeSoftScanTrigger();          
+        });        
+            
+    });
+
+    function getReaderData() {        
+        var scanData = js.BarCodeGetReaderData();
+        var currData = $('#txaScanResult').val().trim();
+        //alert("getReaderData: scanData=" + scanData + ", currData=" + currData);
+        if (currData == "")
+            $('#txaScanResult').val(scanData);
+        else
+            $('#txaScanResult').val(currData + "\n" + scanData);
+    }
+
+</script>
+</head>
+
+<body>
+    <div data-role="page" id="pgScanTest">
+
+        <div data-role="header">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                    <td width="15%">&nbsp;<&nbsp;<a class="navTextS" href="ReaderCfgIndex.html" rel="external">Home</a></td>
+                    <td style="text-align: center; font-size:16pt">Scan Test</td>
+                    <td width="15%" align="right"></td>
+                </tr>
+            </table>
+        </div>
+
+        <div data-role="main" class="ui-content">            
+            <textarea id="txaScanResult" name="txaScanResult" data-autogrow="false" class="txtAreaAuto"></textarea>
+            <div data-role="controlgroup" data-type="horizontal" style="text-align:right">
+                <input id="btnClear" type="button" value="Clear">                
+            </div>
+            
+            <label for="selTrggrMod"><b>Trigger Mode:</b></label>
+            <select id="selTrggrMod">
+                <option id="selTrggrMod_s" value="s" selected>SW Trigger</option>
+                <option id="selTrggrMod_h" value="h">HW Trigger</option>                
+            </select>
+            <div id="dvScnBtn">
+                <br />
+                <input id="btnScan" type="button" value="Start Scan">
+                <span class="regMsg">*&nbsp;Please press the button to turn on the reader.</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

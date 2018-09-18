@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>ReaderConfig(v1)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="stylesheet" href="jquery.mobile.min.css"/>
+
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.mobile.min.js"></script>
+<script type="text/javascript" src="browserplugin_framewk.js"></script>
+
+<style type="text/css">
+    .navTextS {
+        font-size: small;
+        text-decoration: none;
+    }
+
+    .alertMsg {
+        font-size: small;
+        color: blue
+    }
+</style>
+
+<script type="text/javascript">    
+    var oJsReaderOutput, deviceName;
+    /*
+    var oJsReaderOutput = {
+        keyboardEmulationType: "None",
+        outputEnterWay: "Disable",
+        outputEnterChar: "None",
+        showCodeType:true,
+        showCodeLen:true,
+        prefixCode:"",
+        suffixCode:"",
+        delimiter:0,
+        charsetName: "big5",
+        clearPreviousData:true
+    }; */
+
+    $(document).on("pagecreate", "#pgDataOut", function () {
+
+        if (!js.BarCodeInit()) {
+            alert("Barcode reader initialization failed");
+        }
+
+        oJsReaderOutput = js.BarCodeGetReaderOutputConfiguration();
+        //alert("load: oJsReaderOutput='" + oJsReaderOutput + "'\nstringify: " + JSON.stringify(oJsReaderOutput));
+
+        deviceName = js.JSGetSystemInfo().deviceName;
+      
+        showSettingData();
+
+        $('#btnSave').click(function() {
+            $("#spMsg").html = "";
+            /*
+            var oJsReaderOutput = {
+            keyboardEmulationType:"",
+            outputEnterWay:"",
+            outputEnterChar:"",
+            showCodeType:true,
+            showCodeLen:true,
+            prefixCode:"",
+            suffixCode:"",
+            delimiter:0,
+            charsetName:"",
+            clearPreviousData:true
+            }; */
+
+            oJsReaderOutput.enableKeyboardEmulation = $("#selKeyBrEmu").val();
+            oJsReaderOutput.autoEnterWay = $("#selAutoEtr").val();
+            //var selAutoEtrCharVal = $("#selAutoEtrChar").val();
+            //oJsReaderOutput.autoEnterChar = (selAutoEtrCharVal == "n" ? "" : getMatchedEtrChar(false, $("#selAutoEtrChar").val()));
+            oJsReaderOutput.autoEnterChar = getMatchedEtrChar(false, $("#selAutoEtrChar").val());
+            //alert("deviceName.includes(BHT)=" + deviceName.includes("BHT") + ", chxDisCodTyp.checked=" + $("#chxDisCodTyp").prop("checked"));
+            oJsReaderOutput.showCodeType = (deviceName.includes("BHT")? $("#chxDisCodTyp").prop("checked") : Number($("#chxDisCodTyp").prop("checked")));
+            oJsReaderOutput.showCodeLen = (deviceName.includes("BHT")? $("#chxDisCodLen").prop("checked") : Number($("#chxDisCodLen").prop("checked")));
+            oJsReaderOutput.szPrefixCode = $("#txtPrefx").val();
+            oJsReaderOutput.szSuffixCode = $("#txtSuffx").val();
+            oJsReaderOutput.useDelim = Number($("#selFieldDlm").val());
+            oJsReaderOutput.szCharsetName = $("#selBarChar").val();
+            oJsReaderOutput.clearPreviousData = (deviceName.includes("BHT")? $("#chxClrPreData").prop("checked") : Number($("#chxClrPreData").prop("checked")));
+
+            //alert("oJsReaderOutput.autoEnterChar='" + oJsReaderOutput.autoEnterChar + "'");
+            //alert("saving: oJsReaderOutput=" + JSON.stringify(oJsReaderOutput) + "\nshowCodeType=" + oJsReaderOutput.showCodeType);
+            if (js.BarCodeSetReaderOutputConfiguration( oJsReaderOutput)) {
+                $("#spMsg").html("The changes have been saved successfully.");
+            }
+            else {
+                $("#spMsg").html("Failed to save the changes.");
+            }
+        });
+
+    });    
+
+    function showSettingData() {
+        // Keyboard Emulation
+        $("#selKeyBrEmu").val(oJsReaderOutput.enableKeyboardEmulation).change();
+        //$("#chxTransAIM").prop("checked", (oJsUsrPrefOrig.transmitCodeIdChar == 1));
+        // Auto Enter:
+        $("#selAutoEtr").val(oJsReaderOutput.autoEnterWay).change();
+        // Auto Enter Characer:
+        //alert("oJsReaderOutput.autoEnterChar='" + oJsReaderOutput.autoEnterChar + "'");
+        var autoEtrCharVal = (oJsReaderOutput.autoEnterChar.charCodeAt(0) == 0 ? "n" : getMatchedEtrChar(true, oJsReaderOutput.autoEnterChar));
+        /*
+        alert("load: autoEnterChar='" + oJsReaderOutput.autoEnterChar.charAt(0) + "'\nautoEnterChar.charAt(0) ==null? " + (oJsReaderOutput.autoEnterChar.charAt(0) == null)
+                + "\nnull ascii=" + "".charCodeAt(0)
+                + "\nautoEnterChar ascii=" + oJsReaderOutput.autoEnterChar.charCodeAt(0) + "\nautoEtrCharVal='" + autoEtrCharVal + "'");
+        */
+        $("#selAutoEtrChar").val(autoEtrCharVal).change();
+        //$("#selAutoEtrChar").val(getMatchedEtrChar(true, oJsReaderOutput.autoEnterChar)).change();
+        //alert("oJsReaderOutput.showCodeType=" + oJsReaderOutput.showCodeType);
+        // Display Code Type
+        $("#chxDisCodTyp").prop("checked", oJsReaderOutput.showCodeType).checkboxradio("refresh");
+        // Display Code Length
+        $("#chxDisCodLen").prop("checked", oJsReaderOutput.showCodeLen).checkboxradio("refresh");
+        // Prefix:
+        $("#txtPrefx").val(oJsReaderOutput.szPrefixCode);
+        // Suffix:
+        $("#txtSuffx").val(oJsReaderOutput.szSuffixCode);
+        // Field delimiter:
+        $("#selFieldDlm").val(oJsReaderOutput.useDelim).change(); //getMatchedEtrChar(true, oJsReaderOutput.useDelim)
+        //alert("useDelim == \u0000? " + (oJsReaderOutput.useDelim == "\u0000"))
+        // Barcode Charset:
+        $("#selBarChar").val(oJsReaderOutput.szCharsetName).change();
+        // Clear Previous Data
+        $("#chxClrPreData").prop("checked", oJsReaderOutput.clearPreviousData).checkboxradio("refresh");       
+    }
+
+    function getMatchedEtrChar(bName, sValue) {
+        if (bName) {
+            switch (sValue) {
+                case "0":                    
+                    return "n";
+                    break;
+                case "\r":
+                    return "cr";
+                    break;
+                case "\t":
+                    return "tab";
+                    break;
+                case " ":  //case "\s"
+                    return "space";
+                    break;
+                default:
+                    //alert("sValue='" + sValue + "'");
+                    return sValue;
+            }
+        }
+        else {
+            switch (sValue) {
+                case "n":
+                    //alert("bName false: sValue set to ''");
+                    return "";
+                    break;
+                case "cr":
+                    return "\r";
+                    break;
+                case "tab":
+                    return "\t";
+                    break;
+                case "space":
+                    return " ";  //"\s";
+                    break;
+                default:
+                    //alert("sValue='" + sValue + "'");
+                    return sValue;
+            }
+        }
+    }
+</script>
+</head>
+<body>
+    <div data-role="page" id="pgDataOut">
+
+        <div data-role="header">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <!--tr><td class="navText" valign="top">&nbsp;&nbsp;<&nbsp;<a class="navText" href="Index.html">Home</a></td></tr-->
+                <tr>
+                    <td width="15%">&nbsp;<&nbsp;<a class="navTextS" href="ReaderCfgIndex.html" rel="external">Home</a></td>
+                    <td style="text-align: center; font-size:16pt">Data Output</td>
+                    <td width="35%" align="right">
+						<a class="navTextS" href="Symbol1D.html" rel="external">1D Symbologies >&nbsp;</a>
+					</td>
+                </tr>
+            </table>
+        </div>
+
+        <div data-role="main" class="ui-content">
+            
+            <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                <tr>
+                    <td><label for="selKeyBrEmu"><b>Keyboard Emulation:</b></label>
+                        <select id="selKeyBrEmu">
+                            <option value="None">None</option>
+                            <option value="InputMethod">InputMethod</option>
+                            <option value="KeyEvent">KeyEvent</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="selAutoEtr"><b>Auto Enter:</b></label>
+                        <select id="selAutoEtr">
+                            <option value="Disable">Disable</option>
+                            <option value="PreffixData">Enter char + Decoded data</option>
+                            <option value="SuffixData">Decoded data + Enter char</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="selAutoEtrChar"><b>Auto Enter Characer:</b></label> 
+                        <select id="selAutoEtrChar">
+                            <option value="n">None</option>
+                            <option value="cr">Carriage return</option>
+                            <option value="tab">Tab</option>
+                            <option value="space">Space</option>
+                            <option value=",">Comma</option>
+                            <option value=";">Semicolon</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr><td><label for="chxDisCodTyp">Display Code Type</label>
+                            <input type="checkbox" id="chxDisCodTyp" /></td></tr>
+
+                <tr><td><label for="chxDisCodLen">Display Code Length</label>
+                            <input type="checkbox" id="chxDisCodLen" /></td></tr>
+
+                <tr><td><label for="txtPrefx"><b>Prefix</b></label>
+                            <input type="text" id="txtPrefx" /></td></tr>
+                <tr><td><label for="txtSuffx"><b>Suffix</b></label>                    
+                            <input type="text" id="txtSuffx" /></td></tr>
+                <tr>
+                    <td><label for="selFieldDlm"><b>Field delimiter:</b></label>                        
+                        <select id="selFieldDlm">
+                            <option value="0">None</option>
+                            <option value="44">Comma</option>
+                            <option value="59">Semicolon</option>
+                            <option value="46">Full stop</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="selBarChar"><b>Barcode Charset:</b></label>                         
+                        <select id="selBarChar">
+                            <option value="windows-1252" selected="selected">Windows-1252: Western European</option>
+                            <option value="big5">Big5</option>
+                            <option value="shift_JIS">Shift_JIS</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr><td><label for="chxClrPreData">Clear Previous Data</label>
+                            <input type="checkbox" id="chxClrPreData" checked="checked" /></td></tr>
+                <tr><td height="3px"></td></tr>
+                <tr><td><span id="spMsg" class="alertMsg"></span></td></tr>
+                <tr><td><input id="btnSave" type="button" value="Apply" /></td></tr>
+            </table>
+            
+        </div>
+    </div>
+
+    <!--div data-role="page" id="pgSelCodePop">
+        <div data-role="main" class="ui-content">
+            <a href="#pgDataOut" class="ui-btn">Confirm</a>
+        </div>
+    </div-->
+</body>
+</html>

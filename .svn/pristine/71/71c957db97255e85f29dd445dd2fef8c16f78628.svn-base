@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>ReaderConfig(v1)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="jquery.mobile.min.css">
+
+<script type="text/javascript" src="browserplugin_framewk.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.mobile.min.js"></script>
+<style type="text/css">
+        .navTextS
+    {     	
+    	font-size: small;
+    	text-decoration: none;     	       	
+    }
+    
+    .alertMsg 
+    {
+        font-size:small;
+        color:Red
+    }
+
+    .regMsg 
+    {
+        font-size:small;
+        color:blue
+    }
+
+</style>
+    
+<script type="text/javascript">
+    var oJsNotifParam, rgLedDur, nLedDurIni = 0, nLedDurMin = 0, nLedDurMax = 5000; //numLedDur, 
+        /*
+         $( function() {
+            $("#slider").slider({
+              value:0,
+              min: 0,
+              max: 5000,
+              step: 1,
+              slide: function( event, ui ) {
+                $("#spDur").html( ui.value );
+                //$("#amount").val( "$" + ui.value );
+              }
+            });
+            
+            $( "#spDur" ).html( $( "#slider" ).slider("value") );
+            //$( "#amount" ).val( "$" + $( "#slider" ).slider("value") );
+         }); */
+
+    //alert("load: ledDuration='" + oJsNotifParam.ledDuration + "'\nall: " + JSON.stringify(oJsNotifParam));
+    /*
+    var oJsNotifParam = {
+        beepType:"",
+        enableState:false,
+        vibrationCounter:1,
+        ledDuration:0
+    }; */
+
+    $(document).on("pagecreate", "#pgNotiSett", function () {
+        rgLedDur = $("#rgLedDur");
+
+        if (!js.BarCodeInit()) {
+            alert("Barcode reader initialization failed");
+        }
+
+        oJsNotifParam = js.BarCodeGetNotificationParams();
+        //alert("load: " + JSON.stringify(oJsNotifParam));
+
+        showSettingData();
+        
+        /*
+        $('#chxLedDur').click(function () {
+            if (this.checked)
+                rgLedDur.prop("disabled", false);
+            else {
+                rgLedDur.prop("disabled", true);
+                rgLedDur.val("0");
+            }
+        }); */
+
+        $('#btnSave').click(function() {
+            $("#spMsg").html = "";
+
+            /*
+            if (!checkData())
+                return; */
+            /*
+            var oJsNotifParam = {
+            beepType:"",
+            enableState:false,
+            vibrationCounter:1,
+            ledDuration:0
+            }; */
+
+            oJsNotifParam.ledDuration = Number( rgLedDur.val());
+            oJsNotifParam.vibrationCounter = Number( $("#selVibratCount").val());
+            oJsNotifParam.ReaderBeep = $("#selBeepSnd").val();
+            if (oJsNotifParam.vibrationCounter == 0)
+                oJsNotifParam.enableVibrator = false;
+            else
+                oJsNotifParam.enableVibrator = true;
+
+            if ( js.BarCodeSetNotificationParams( oJsNotifParam) ) {
+                $("#spMsg").html("The changes have been saved successfully.");
+            }
+            else {
+                $("#spMsg").html("Failed to save the changes.");
+            }
+        });       
+            
+    });  
+
+    function showSettingData() {
+        // LED Duration
+        rgLedDur.val(oJsNotifParam.ledDuration).slider('refresh');
+        // vibration Counter:
+        $("#selVibratCount").val(oJsNotifParam.vibrationCounter).change();
+        // beep Type:        
+        $("#selBeepSnd").val((oJsNotifParam.ReaderBeep == "" ? "Mute" : oJsNotifParam.ReaderBeep)).change();
+                 
+    }
+        
+    function checkData() {      
+
+        if (rgLedDur.val() > nLedDurMax || rgLedDur.val() < nLedDurMin) {
+            $("#spMsg").html("LED Duration must be between " + nLedDurMin + " and " + nLedDurMax + ".");
+            $("#spMsg").focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+</head>
+
+<body>
+    <div data-role="page" id="pgNotiSett">
+
+        <div data-role="header">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                    <td width="15%">&nbsp;<&nbsp;<a class="navTextS" href="ReaderCfgIndex.html" rel="external">Home</a></td>
+                    <td style="text-align: center; font-size:16pt">Notification Settings</td>
+                    <td width="35%" align="right"><a class="navTextS" href="DataOut.html" rel="external">Data Output >&nbsp;</a></td>
+                </tr>
+            </table>
+        </div>
+
+        <div data-role="main" class="ui-content">            
+            <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                <tr><td><b>Visual Indicator</b></td></tr>
+                <!--tr><td><input id="chxEnabLED" type="checkbox" />Enable LED when good read</td></tr-->
+                <tr>
+                    <td>
+                        <div class="ui-field-contain">
+                            <!--fieldset data-role="controlgroup">
+                                <legend><b>Visual Indicator - LED Duration</b></legend>
+                                <label for="chxLedDur">Enable LED when good read</label>
+                                <input type="checkbox" id="chxLedDur" />
+                                <label for="numLedDur">LED Duration (ms, 0 to 5000):</label>
+                                <input type="number" id="numLedDur" min="0" max="5000" disabled="disabled" /-->
+                                <label for="rgLedDur">LED Duration (1 - 5000 ms, 0:disabled):</label>
+                                <input type="range" id="rgLedDur" value="0" min="0" max="5000" step="1" />
+                                <span id="spLedDurMsg" class="alertMsg"></span>                               
+                            <!--/fieldset-->
+                        </div></td>
+                </tr>
+                <tr><td><b>Vibrator</b></td></tr>
+                <tr>
+                    <td>
+                        <div class="ui-field-contain">
+                            <!--fieldset data-role="controlgroup">
+                            <legend><b>Vibrator</b></legend-->
+                            <label for="selVibratCount">Vibrate when good read:</label>
+                            <select id="selVibratCount">
+                                <option value="0" selected="selected">No vibration</option>
+                                <option value="1">0.5 sec</option>
+                                <option value="2">1 sec</option>
+                                <option value="3">1.5 sec</option>
+                                <option value="4">2 sec</option>
+                                <option value="5">2.5 sec</option>
+                                <option value="6">3 sec</option>
+                                <option value="7">3.5 sec</option>
+                                <option value="8">4 sec</option>
+                                <option value="9">4.5 sec</option>
+                                <option value="10">5 sec</option>
+                            </select>
+                            <!--/fieldset-->
+                        </div></td>
+                </tr>
+
+                <tr><td><b>Beeper</b></td></tr>
+                <tr>
+                    <td>
+                        <div class="ui-field-contain">
+                            <!--fieldset data-role="controlgroup">
+                                <legend><b>Beeper</b></legend-->
+                                <label for="selBeepSnd">Beep when good read:</label>
+                                <select id="selBeepSnd">
+                                    <option value="Mute">Mute</option>
+                                    <option value="Default">Default</option>
+                                    <option value="Hwandsw">Hwandsw</option>
+                                    <option value="MenuPop">MenuPop</option>
+                                    <option value="MsgBox">MsgBox</option>
+                                    <option value="Notify">Notify</option>
+                                    <option value="VoiceBeep">VoiceBeep</option>
+                                    <option value="Alarm2">Alarm2</option>
+                                    <option value="Alarm3">Alarm3</option>
+                                    <option value="LowBatt">LowBatt</option>
+                                </select>
+                            <!--/fieldset-->
+                        </div></td>
+                </tr>
+
+                <tr><td height="3px"></td></tr>
+                <tr><td><span id="spMsg" class="regMsg"></span></td></tr>
+                <tr><td><input id="btnSave" type="button" value="Apply" /></td></tr>
+            </table>
+        </div>
+
+    </div>
+</body>
+</html>

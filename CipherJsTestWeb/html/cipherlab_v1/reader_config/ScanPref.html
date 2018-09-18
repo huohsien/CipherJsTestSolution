@@ -1,0 +1,465 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>ReaderConfig(v1)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="jquery.mobile.min.css">
+<script type="text/javascript" src="browserplugin_framewk.js"></script>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="jquery.mobile.min.js"></script>
+<script type="text/javascript" src="JSLib.js"></script>
+<style type="text/css">
+    .navTextS
+    {     	
+    	font-size: small;
+    	text-decoration: none;     	       	
+    }
+
+    #divNumUpDn a
+    {
+	    cursor:pointer;
+	    background: Grey; /*#1dac2e;*/
+	    height:25px;  /* 25px */
+	    display: inline; /*inline-block;*/
+	    margin:0px;
+	    padding:0px 10px;
+	    float:left;
+	    line-height:25px;
+	    font-size:16px;
+	    color:#fff;
+	    text-decoration:none;
+	    text-align:center;
+	    vertical-align: middle	        
+    }
+        
+    #divNumUpDn input[type="number"]
+    {
+	    border:solid 1px Grey;  /*#1dac2e;*/	        
+	    /* height:21px; */
+	    float:left;
+	    width:210px;
+	    padding:1px 5px;
+	    text-align:center;	            
+    }
+        
+    .alertMsg 
+    {
+        font-size:small;
+        color:Red
+    }
+
+    .regMsg 
+    {
+        font-size:small;
+        color:blue
+    }
+</style>
+
+<script type="text/javascript">
+    var oJsUsrPrefOrig, oJsReaderInfo, rgAdRedund, nAdRedunMin = 0, nAdRedunMax = 25;
+    var deviceName = js.JSGetSystemInfo().deviceName;
+    //param support Y/N setup
+    var bAddSecLvlSp = true, bDispModSp = true, bLsrOnTmSp = true, bNegBarcSp = true, bPklstModSp = true, bRedunLvSp = true, bScnAglSp = true, bSecLvSp = true, bTimBetSamSymbSp = true;
+    var bTranAIMSp=true, bTrgrModSp=true, bDecodIllumSp=true, bDecodAmPatSp=true, bIntCharGapSp=true, bTimPresModSp=true, bDecIllumPwrLvlSp=true;      
+    /*
+    var oJsUsrPrefOrig = {
+        addonSecurityLevel: 10,
+        displayMode: true,
+        laserOnTime: 3000,
+        negativeBarcodes: 0,
+        pickListMode: true,
+        redundancyLevel: 2,
+        scanAngle: 0,
+        securityLevel: 3,
+        timeoutBetweenSameSymbology: 1000,
+        transmitCodeIdChar: 1,
+        triggerMode: 0,
+        decodingillumniation: true,
+        decodingAimingPattern: true,
+        interCharGapSize: 6
+    };  */
+
+    $(document).on("pagecreate", "#pgScanPref", function () {
+        rgAdRedund = $("#rgAdRedund");
+        
+        //Initialize the barcode reader     
+        if (!js.BarCodeInit()) {
+            alert("Barcode reader initialization failed");
+        }        
+
+        oJsUsrPrefOrig = js.BarCodeGetUserPreferences();  //JSON.parse(js.BarCodeGetUserPreferences());
+        var readerType = js.BarCodeGetReaderType();
+        //alert("readerType=" + readerType);
+        oJsReaderInfo = parseReaderType(readerType);        
+        /*
+        alert("loading: " + JSON.stringify(oJsUsrPrefOrig) + "\ndecodingIlluminationPowerLevel=" + oJsUsrPrefOrig.decodingIlluminationPowerLevel
+                + "\ntimeoutPresentationMode=" + oJsUsrPrefOrig.timeoutPresentationMode
+                + "\nnegativeBarcodes=" + oJsUsrPrefOrig.negativeBarcodes);  
+        
+        alert("load: " + JSON.stringify(oJsUsrPrefOrig) + "\ntimeoutPresentationMode=" + oJsUsrPrefOrig.timeoutPresentationMode
+                 + "\nscanAngle=" + oJsUsrPrefOrig.scanAngle + "\nnegativeBarcodes=" + oJsUsrPrefOrig.negativeBarcodes);
+        */
+        /*
+        alert("load: " + JSON.stringify(oJsUsrPrefOrig) + "\ntimeoutBetweenSameSymbol: " + oJsUsrPrefOrig.timeoutBetweenSameSymbology +
+                "\ntimeoutPresentationMode=" + oJsUsrPrefOrig.timeoutPresentationMode + "\nlaserOnTime=" + oJsUsrPrefOrig.laserOnTime);
+        */
+        showSettingData();
+
+        //Addon Redundancy control     
+        /*
+        $val = rgAdRedund.val();
+        $('#divNumUpDn a.plus').click(function () {
+            if ($val < nAdRedunMax) {
+                $val++;
+                numAdRedund.val($val);
+            }
+        });
+        
+        $('#divNumUpDn a.minus').click(function () {
+
+            if ($val > nAdRedunMin) {
+                $val--;
+                numAdRedund.val($val);
+            }
+        });  */
+        
+        $('#selScanMod').change(function () {            
+            if ($("#selScanMod").val() == 3) {
+                $("#selPresUsTim").removeAttr("disabled");
+                //alert("onchg: selPresUsTim disable=" + $("#selPresUsTim").attr("disabled"));
+            }
+            else {
+                //$("#selPresUsTim").val("0").change();
+                $("#selPresUsTim").attr("disabled", "disabled");
+            }
+        });
+
+        $('#btnSave').click(function () {
+            $("#spMsg").html("");                         
+            
+            //oJsUsrPrefOrig.transmitCodeIdChar = ($("#chxTransAIM").prop("checked") ? 1 : 0);
+            oJsUsrPrefOrig.laserOnTime = Number($("#selDecTout").val());
+            oJsUsrPrefOrig.redundancyLevel = Number( $("#selRedunLv").val());           
+            oJsUsrPrefOrig.securityLevel = Number( $("#selSecurLv").val());
+            oJsUsrPrefOrig.interCharGapSize = Number($("#selIntCharGap").val());
+            oJsUsrPrefOrig.triggerMode = Number($("#selScanMod").val());
+            oJsUsrPrefOrig.timeoutPresentationMode = Number($("#selPresUsTim").val());  //60000 1800000;
+            oJsUsrPrefOrig.decodingillumniation = (deviceName.includes("BHT") ? $("#chxDecIllum").prop("checked") : Number($("#chxDecIllum").prop("checked")));
+            oJsUsrPrefOrig.decodingAimingPattern = (deviceName.includes("BHT") ? $("#chxDecAimPat").prop("checked") : Number($("#chxDecAimPat").prop("checked")));
+            oJsUsrPrefOrig.pickListMode = (deviceName.includes("BHT") ? $("#chxPiclstMod").prop("checked") : Number($("#chxPiclstMod").prop("checked"))); 
+            oJsUsrPrefOrig.displayMode = (deviceName.includes("BHT") ? $("#chxDispMod").prop("checked") : Number($("#chxDispMod").prop("checked"))); 
+            oJsUsrPrefOrig.negativeBarcodes = Number($("#selInvTyp").val());
+            oJsUsrPrefOrig.addonSecurityLevel = Number(rgAdRedund.val());
+            if (!deviceName.includes("BHT"))
+                oJsUsrPrefOrig.decodingIlluminationPowerLevel = Number($("#rgIllumiPwrLvl").val());
+            //oJsUsrPrefOrig.scanAngle = Number(1);            
+            
+            //oJsUsrPrefOrig.triggerMode = 2;
+            //alert("saving data:  " + JSON.stringify(oJsUsrPrefOrig).replace(/,"/g, "\n"));
+            //if (js.BarCodeSetUserPreferences(JSON.stringify(oJsUsrPrefOrig))) {
+            var ret;
+            if ( ret = js.BarCodeSetUserPreferences( oJsUsrPrefOrig)) {
+                $("#spMsg").html("The changes have been saved successfully.");                
+            }
+            else {
+                $("#spMsg").html("Failed to save the changes.");
+            }
+
+            //alert("after save: ret=" + ret + "\noJsUsrPrefOrig = " + JSON.stringify(js.BarCodeGetUserPreferences()));
+        });
+    });
+
+    function showSettingData() {
+        //alert("start showSettingData: oJsReaderInfo.Name = " + oJsReaderInfo.Name);
+        setNonSprtParam(oJsReaderInfo.Name);
+        // Transmit AIM Code ID
+        //$("#chxTransAIM").attr("checked", (oJsUsrPrefOrig.transmitCodeIdChar == 1)).checkboxradio("refresh");        
+        // Decode Timeout (laserOnTime):      
+        $("#selDecTout").val(oJsUsrPrefOrig.laserOnTime).change();
+        // Redundancy Level:
+        if (bRedunLvSp)
+            $("#selRedunLv").val(oJsUsrPrefOrig.redundancyLevel).change();
+        else
+            $("#trRedunLv").hide();
+        // Security Level:
+        if (bSecLvSp)
+            $("#selSecurLv").val(oJsUsrPrefOrig.securityLevel).change();
+        else
+            $("#trSecurLv").hide();
+        // Inter-Char-Gap Size:
+        if (bIntCharGapSp)
+            $("#selIntCharGap").val(oJsUsrPrefOrig.interCharGapSize).change();
+        else
+            $("#trIntCharGap").hide();
+        
+        // Scan Angle:
+        if (bScnAglSp)
+            $("#selScanAgl").val(oJsUsrPrefOrig.scanAngle).change();
+        else
+            $("#trScanAgl").hide();
+        // Scan Mode:
+        $("#selScanMod").val(oJsUsrPrefOrig.triggerMode).change();
+        //var readerTyp = js.BarCodeGetReaderType();
+        //alert("oJsReaderInfo.Dim: " + oJsReaderInfo.Dim);
+        //if (readerTyp.indexOf("1D") !== -1) {  //1D
+        if (oJsReaderInfo.Dim.indexOf("1D") != -1) {
+            //$("#selScanMod_c").attr("disabled", "");
+            //$("#selScanMod_a").attr("disabled", "");
+            $("#selScanMod_p").attr("disabled", "disabled");  //selScanMod_p=3
+        }
+        else {  //2D            
+            $("#selScanMod_c").attr("disabled", "disabled");  // selScanMod_c = 1
+            $("#selScanMod_a").attr("disabled", "disabled");  // selScanMod_a = 2
+            //$("#selScanMod_p").attr("disabled", "");
+        }        
+        //$("#selScanMod option[value='2']").hide();        
+        $("#selScanMod").val(oJsUsrPrefOrig.triggerMode).change();
+
+        //Presentation Usage Time (timeoutPresentationMode)   
+        if (bTimPresModSp) {
+            if (oJsUsrPrefOrig.triggerMode == 3) { //Presentation Mode            
+                $("#selPresUsTim").removeAttr("disabled");
+            }
+            else {
+                $("#selPresUsTim").attr("disabled", "disabled");
+                //$("#selPresUsTim").val("0").change();
+            }
+            $("#selPresUsTim").val(oJsUsrPrefOrig.timeoutPresentationMode).change();
+        }
+        else 
+            $("#trTmoPresMd").hide();        
+       
+        // Decoding Illumniation       
+        if (bDecodIllumSp)
+            $("#chxDecIllum").prop("checked", oJsUsrPrefOrig.decodingillumniation).checkboxradio("refresh");
+        else
+            $("#trDecIllum").hide();
+        // Decode Aiming Pattern       
+        if (bDecodAmPatSp)
+            $("#chxDecAimPat").prop("checked", oJsUsrPrefOrig.decodingAimingPattern).checkboxradio("refresh");
+        else
+            $("#trDecAimPat").hide();
+        // Picklist Mode      
+        if (bPklstModSp)
+            $("#chxPiclstMod").prop("checked", oJsUsrPrefOrig.pickListMode).checkboxradio("refresh");
+        else
+            $("#trPiclstMod").hide();
+        // Display Mode       
+        if (bDispModSp)
+            $("#chxDispMod").prop("checked", oJsUsrPrefOrig.displayMode).checkboxradio("refresh");
+        else
+            $("#trDispMod").hide();
+        // Inverse Type:
+        if (bNegBarcSp)
+            $("#selInvTyp").val(oJsUsrPrefOrig.negativeBarcodes).change();
+        else
+            $("#trNegBarc").hide();
+        // Addon Redundancy:
+        if (bAddSecLvlSp)
+            rgAdRedund.val(oJsUsrPrefOrig.addonSecurityLevel).slider('refresh'); //oJsUsrPref.  $('#divNumUD input[type="text"]')        
+        else
+            $("#trAddSecLvl").hide();
+        // Illumniation Power Level
+        if (bDecIllumPwrLvlSp)
+            $("#rgIllumiPwrLvl").val(oJsUsrPrefOrig.decodingIlluminationPowerLevel).slider('refresh');
+        else
+            $("#trIllumiPwrLvl").hide();        
+        
+    }
+    
+    function setNonSprtParam(readerName) {
+        //alert("setNonSprtParam...." + readerName);
+
+        switch (readerName) {
+            case "EX25":
+                //alert("set up EX25 non-support param...");                
+                bAddSecLvlSp = bDispModSp = bLsrOnTmSp = bPklstModSp = bNegBarcSp = bRedunLvSp
+                        = bScnAglSp = bSecLvSp = bDecodAmPatSp = bIntCharGapSp = bDecIllumPwrLvlSp = false;
+                break;
+            case "SE1524":
+                //alert("set up SE1524 non-support param...");                
+                bDispModSp = bPklstModSp = bNegBarcSp = bScnAglSp = bDecodIllumSp = bDecodAmPatSp
+                                = bIntCharGapSp = bTimPresModSp = bDecIllumPwrLvlSp = false;
+                break;
+            case "SE955":
+                //alert("set up SE955 non-support param...");                
+                bDispModSp = bPklstModSp = bNegBarcSp = bDecodIllumSp = bDecodAmPatSp = bIntCharGapSp
+                            = bTimPresModSp = bDecIllumPwrLvlSp = false;
+                break;
+            case "SE4750MR":
+            case "SE4750SR":
+            case "4500":
+            case "SE4500":            
+                //alert("set up SE4500 non-support param...");                
+                bScnAglSp =  false;
+                if (deviceName.includes("BHT"))
+                    bIntCharGapSp = bDecIllumPwrLvlSp = false;
+                
+                break;
+            default:
+                alert("setNonSprtParam...no matched reader type.");
+                break;
+        }
+       
+    }
+
+</script>
+</head>
+<body>
+
+<div data-role="page" id="pgScanPref">
+
+  <div data-role="header">
+      <table cellpadding="0" cellspacing="0" border="0" width="100%">          
+          <tr>
+              <td width="15%">&nbsp;<&nbsp;<a class="navTextS" href="ReaderCfgIndex.html" rel="external">Home</a></td>
+              <td style="text-align: center; font-size:16pt">Scanner Preferences</td>
+              <td width="40%" align="right"><a class="navTextS" href="NotiSett.html" rel="external">Notification Settings >&nbsp;</a></td>
+          </tr>         
+      </table>
+  </div>
+
+  <div data-role="main" class="ui-content">          
+      <table border="0" cellpadding="1" cellspacing="1" width="100%">
+          <!--tr>
+              <td>
+                  <label for="chxTransAIM">Transmit AIM Code ID</label>
+                  <input type="checkbox" id="chxTransAIM" >
+              </td>
+          </tr-->
+          <tr>
+              <td>
+                  <label for="selDecTout"><b>Decode Timeout:</b></label>
+                  <select name="selDecTout" id="selDecTout">
+                      <option value="1000">1 sec</option>
+                      <option value="2000">2 sec</option>
+                      <option value="3000">3 sec</option>
+                      <option value="4000">4 sec</option>
+                      <option value="5000">5 sec</option>
+                      <option value="6000">6 sec</option>
+                      <option value="7000">7 sec</option>
+                      <option value="8000">8 sec</option>
+                      <option value="9000">9 sec</option>
+                  </select>
+              </td>
+          </tr>
+          <tr id="trRedunLv">
+              <td><label for="selRedunLv"><b>Redundancy Level:</b></label>                  
+                  <select id="selRedunLv" name="selRedunLv">
+                      <option value="1">Level 1</option>
+                      <option value="2">Level 2</option>
+                      <option value="3">Level 3</option>
+                      <option value="4">Level 4</option>
+                  </select>
+              </td>
+          </tr>
+          <tr id="trSecurLv">
+              <td><label for="selSecurLv"><b>Security Level:</b></label>                 
+                  <select id="selSecurLv" name="selSecurLv">
+                      <option value="0">Level 0</option>
+                      <option value="1">Level 1</option>
+                      <option value="2">Level 2</option>
+                      <option value="3">Level 3</option>
+                  </select>
+              </td>
+          </tr>
+          <tr id="trIntCharGap">
+              <td>
+                  <label for="selIntCharGap"><b>Inter-Char-Gap Size</b></label>
+                  <select id="selIntCharGap">
+                      <option value="6">Normal</option>
+                      <option value="10">Large</option>                   
+                  </select>
+              </td>
+          </tr>
+          <tr>
+              <td><label for="selScanMod"><b>Scan Mode:</b></label>              
+                  <select id="selScanMod">
+                      <option id="selScanMod_l" value="0">Level</option>
+                      <option id="selScanMod_c" value="1">Continuous Mode</option>                                           
+                      <option id="selScanMod_a" value="2">Auto Aim Mode</option>
+                      <option id="selScanMod_p" value="3">Presentation Mode</option> 
+                  </select>
+              </td>
+          </tr>
+          <tr id="trScanAgl" >
+              <td>
+                  <label for="selScanAgl"><b>Scan Angle:</b></label>
+                  <select id="selScanAgl">
+                      <option id="selScanAgl_n" value="0">Narrow Angle (35 degrees)</option>
+                      <option id="selScanAgl_w" value="1">Wide Angle (47 degrees)</option>                      
+                  </select>
+              </td>
+          </tr>
+          <tr id="trTmoPresMd">
+              <td>
+                  <label for="selPresUsTim"><b>Presentation Usage Time:</b></label>
+                  <select id="selPresUsTim">
+                      <!--option id="selPresUsTim_0" value="0">None</option-->
+                      <option id="selPresUsTim_1" value="60000">1 Minute</option>
+                      <option id="selPresUsTim_2" value="120000">2 Minutes</option>
+                      <option id="selPresUsTim_5" value="300000">5 Minutes</option>
+                      <option id="selPresUsTim_10" value="600000">10 Minutes</option>
+                      <option id="selPresUsTim_15" value="900000">15 Minutes</option>
+                  </select>
+              </td>
+          </tr>
+          <tr id="trDecIllum"><td>
+                  <label for="chxDecIllum">Decoding Illumniation</label>
+                  <input type="checkbox" id="chxDecIllum" ></td></tr>
+          <tr id="trDecAimPat">
+              <td>
+                  <label for="chxDecAimPat">Decode Aiming Pattern</label>
+                  <input type="checkbox" id="chxDecAimPat">
+              </td>
+          </tr>
+          <tr id="trPiclstMod">
+              <td>
+                  <label for="chxPiclstMod">Picklist Mode</label>
+                  <input type="checkbox" id="chxPiclstMod">
+              </td>
+          </tr>
+          <tr id="trDispMod">
+              <td>
+                  <label for="chxDispMod">Display Mode</label>
+                  <input type="checkbox" id="chxDispMod">
+              </td>
+          </tr>
+
+          <tr id="trNegBarc">
+              <td><label for="selInvTyp"><b>Inverse Type:</b></label>                    
+                  <select id="selInvTyp">
+                      <option value="0">Regular Only</option>
+                      <option value="1">Inverse Only</option>
+                      <option value="2">Inverse Auto-detect</option>
+                  </select>
+              </td>
+          </tr>
+          <tr><td height="3px"></td></tr>      
+          <tr td="trAddSecLvl">
+              <td>
+                  <!--div id="divNumUpDn">
+                      <a class="minus" href="#">-</a><input type="number" id="numAdRedund" min="0" max="25"><a class="plus" href="#">+</a>
+                  </div-->
+                  <label for="rgAdRedund"><b>Addon Redundancy: (2 - 30):</b></label>
+                  <input type="range" id="rgAdRedund" value="10" min="2" max="30" step="1" />
+              </td>
+          </tr>
+          <tr id="trIllumiPwrLvl">
+              <td>                
+                  <label for="rgIllumiPwrLvl"><b>Illumination Power Level: (0 - 10):</b></label>
+                  <input type="range" id="rgIllumiPwrLvl" value="10" min="0" max="10" step="1" />
+              </td>
+          </tr>
+          <tr><td height="3px"></td></tr>
+          <tr><td><span id="spMsg" class="regMsg"></span></td></tr>
+          <tr><td><input id="btnSave" type="button" value="Apply" /></td></tr>
+          
+      </table>                 
+            
+  </div>
+        
+</div>
+
+</body>
+</html>

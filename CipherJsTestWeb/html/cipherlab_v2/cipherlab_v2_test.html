@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>CipherLab JavaScript(v2) Test</title>
+    
+    <script type="text/javascript">
+        airlock.onReady("handleAirlockReady()");
+
+        function handleAirlockReady() {
+            document.getElementById("sp_reader_type").textContent = "Load...";
+            document.getElementById("sp_service_ver").textContent = "Load...";
+            document.getElementById("sp_api_ver").textContent = "Load...";
+
+            try {
+                var value = BarCodeGetReaderType();
+                if(value==null)
+                {
+                    value="No value";
+                }
+
+                document.getElementById("sp_reader_type").textContent = value;
+                if (value == "SM1") 
+                {
+                    document.getElementById("sp_SM1").textContent = "<OK>";
+                }
+                else if (value == "SE955") 
+                {
+                    document.getElementById("sp_SE955").textContent = "<OK>";
+                }
+                else if (value == "SE1524") 
+                {
+                    document.getElementById("sp_SE1524").textContent = "<OK>";
+                }
+                else if (value == "Moto_2D_4500")
+                {
+                    document.getElementById("sp_SE4500").textContent="<OK>";
+                }
+                else if (value == "SE4750MR_2D") 
+                {
+                    document.getElementById("sp_SE4750MR").textContent = "<OK>";
+                }
+                else if (value == "SE4750SR_2D") 
+                {
+                    document.getElementById("sp_SE4750SR").textContent = "<OK>";
+                }
+                else if (value == "EX25") 
+                {
+                    document.getElementById("sp_EX25").textContent = "<OK>";
+                }
+            }
+            catch (err) 
+            {
+                document.getElementById("sp_reader_type").textContent = err;
+            }
+
+            try {
+                var value = BarCodeGetReaderServiceVersion();
+                
+                if(value==null)
+                {
+                    value="No value";
+                }
+
+                document.getElementById("sp_service_ver").textContent = value;
+            }
+            catch (err) 
+            {
+                document.getElementById("sp_service_ver").textContent = err;
+            }
+
+            try 
+            {
+                var value = BarCodeGetApiVersion();
+                
+                if(value==null)
+                {
+                    value="No value";
+                }
+
+                document.getElementById("sp_api_ver").textContent = value;
+            }
+            catch (err) 
+            {
+                document.getElementById("sp_api_ver").textContent = err;
+            }
+        }
+    </script>
+    <style type="text/css">
+        .style1
+        {
+            width: 180px;
+            height:50px;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+    <h2>CipherLab JavaScript(v2) Test</h2>
+    
+    <table border="1">
+        <tr>
+            <td colspan="2">Reader Info</td>
+        </tr>
+        <tr>
+            <td class="style1">BarCodeGet<br/>ReaderType</td>
+            <td><span id="sp_reader_type">Unknown</span></td>
+        </tr>
+        <tr>
+            <td class="style1">BarCodeGet<br/>ReaderService<br/>Version</td>
+            <td><span id="sp_service_ver">Unknown</span></td>
+        </tr>
+        <tr>
+            <td class="style1">BarCodeGet<br/>ApiVersion</td>
+            <td><span id="sp_api_ver">Unknown</span></td>
+        </tr>
+    </table>
+    
+    <br />
+    <table border="1">
+        <tr>
+            <td colspan="2">Reader JS Test</td>
+        </tr>
+        <tr>
+            <td>Reader Type</td>
+            <td>Updated Date</td>
+        </tr>
+        <tr>
+            <td class="style1">
+                <a href="reader_api/test_SM1_v2.html">SM1</a>
+                <span id="sp_SM1"></span>
+            </td>
+            <td>2018/9/3</td>
+        </tr>
+        <tr>
+            <td class="style1">
+                <a href="reader_api/test_SE955_v2.html">SE955</a>
+                <span id="sp_SE955"></span>
+            </td>
+            <td>2018/9/3</td>
+        </tr>
+        <tr>
+            <td class="style1">
+                <a href="reader_api/test_SE1524_v2.html">SE1524</a>
+                <span id="sp_SE1524"></span>
+            </td>
+            <td>2018/9/3</td>
+        </tr>
+        <tr>
+            <td class="style1">
+                <a href="reader_api/test_SE4500_v2.html">SE4500</a>
+                <span id="sp_SE4500"></span>
+            </td>
+            <td>2018/9/3</td>
+        </tr>
+        <tr>
+            <td class="style1">
+                <a href="reader_api/test_SE4750MR_v2.html">SE4750MR</a>
+                <span id="sp_SE4750MR"></span>
+            </td>
+            <td>2018/9/3</td>
+        </tr>
+        <tr>
+            <td class="style1">
+                <a href="reader_api/test_SE4750SR_v2.html">SE4750SR</a>
+                <span id="sp_SE4750SR"></span>
+            </td>
+            <td>2018/9/3</td>
+        </tr>
+        <tr>
+            <td class="style1">
+                <a href="reader_api/test_EX25_v2.html">EX25</a>
+                <span id="sp_EX25"></span>
+            </td>
+
+            <td>2018/9/3</td>
+        </tr>
+    </table>
+
+    </center>
+</body>
+</html>

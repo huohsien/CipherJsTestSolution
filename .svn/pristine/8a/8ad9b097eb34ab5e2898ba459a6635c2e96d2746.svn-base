@@ -1,0 +1,455 @@
+﻿<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>ReaderConfig(v1)</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="jquery.mobile.min.css">
+        <script type="text/javascript" src="browserplugin_framewk.js"></script>
+        <script type="text/javascript" src="jquery.min.js"></script>
+        <script type="text/javascript" src="jquery.mobile.min.js"></script>
+        <script type="text/javascript" src="JSLib.js"></script>
+        <style type="text/css">
+            .navTextS
+            {     	
+    	        font-size: small;
+    	        text-decoration: none;     	       	
+            }
+            
+            .alertMsg 
+            {
+                font-size:small;
+                color:Red
+            }
+
+            .regMsg 
+            {
+                font-size:small;
+                color:blue
+            }
+        </style>
+    
+        <script type="text/javascript">     
+            var oJsReaderInfo, oJsDecodersStatus;
+            var oJsAztec, oJsDataMatrix, oJsMaxiCode, oJsMicroPDF417, oJsMicroQR, oJsPDF417, oJsQRCode;
+            //------symbology supported/non-supported settings
+            //Codabar
+            var bCodabarSp = true, bCB_VrCkDgSp = true, bCB_NotisTySp = true, bCB_NotisSp = true, bCB_Len1Sp = true, bCB_Len2Sp = true;
+            //Code11
+            var bCode11Sp = true, bC11_Len1Sp = true, bC11_Len2Sp = true, bC11_CkDgOpSp = true;
+            //Code39
+            var bCode39Sp = true, bC39_Len1Sp = true, bC39_Len2Sp = true, bC39_cvrC32Sp = true, bC39_cvrC32PfxSp = true;
+            //TriopticCode39
+            var bTrptC39Sp = true;
+            //Korean3Of5
+            var bKor35Sp = true;
+            //Code93
+            var bCode93Sp = true, bC93_Len1Sp = true, bC93_Len2Sp = true;
+            //Code93
+            var bCode128Sp = true;
+            //GS1128
+            var bGS1128Sp = true, bGS128_FldSepSp = true, bGS1128_AppIDSp = true, bGS1128_AppIDM1Sp = true, bGS1128_AppIDM2Sp = true;
+            //ISBT128
+            var bISBT128Sp = true, bISBT128_cnctSp = true, bISBT128_rednSp = true;
+            //Chinese2Of5
+            var bChin25Sp = true;
+            //Industrial2Of5
+            var bIndus25Sp = true, bIndus25_Len1Sp = true, bIndus25_Len2Sp = true;
+            //Interleaved2Of5
+            var bIntl25Sp = true, bIntl25_Len1Sp = true, bIntl25_Len2Sp = true, bIntl25_VrCkDgSp = true, bIntl25_cvrE13Sp = true;
+            //Matrix2Of5
+            var bMtx25Sp = true, bMtx25_Len1Sp = true, bMtx25_Len2Sp = true, bMtx25_redundSp = true, bMtx25_VrCkDgSp = true, bMtx25_TmCkDgSp = true;
+            //UccCoupon
+            var bCoupnSp = true;
+            //GS1DataBar14
+            var bGS1Db14Sp = true, bGS1Db14_CvrUpcESp = true, bGS1Db14_ScLvSp = true;
+            //GS1DataBarLimited
+            var bGS1DbLmtSp = true, bGS1DbL_CvrUpcESp = true, bGS1DbL_SecLvSp = true;
+            //GS1DataBarExpanded
+            var bGS1DbExSp = true, bGS1DbEx_FldSepSp = true, bGS1DbEx_ScLvSp = true;
+            //Msi
+            var bMSISp = true, bMSI_Len1Sp = true, bMSI_Len2Sp = true, bMSI_CkDgOpSp = true, bMSI_AlgoSp = true;
+            //Ean8
+            var bEan8Sp = true, bEAN8_Ad2Sp = true, bEAN8_Ad5Sp = true, bEAN8_CvrE13 = true;
+            //Ean13
+            var bEan13Sp = true, bEAN13_Ad2Sp = true, bEAN13_Ad5Sp = true, bEAN13_cvrISSN = true, bEAN13_BISp = true;
+            //UpcA
+            var bUPCASp = true, bUPCA_Ad2Sp = true, bUPCA_Ad5Sp = true, bUPCA_TrnSysNumSp = true;
+            //UpcE
+            var bUPCESp = true, bUPCE_Ad2Sp = true, bUPCE_Ad5Sp = true, bUPCE_TrnSysNumSp = true; //bUPCE_TmCkDg = true, , bUPCE_CvrUPCA=true
+            //UpcE1
+            var bUPCE1Sp = true, bUPCE1_Ad2Sp = true, bUPCE1_Ad5Sp = true, bUPCE1_TmCkDg = true, bUPCE1_TrnSysNumSp = true, bUPCE1_CvrUPCA = true;
+            //Composite
+            var bCmpsSp = true, bCmpsCABSp = true, bCmpsCCSp = true, bCmpsT39Sp = true, bCmps_UPCMdSp = true, bCmps_EmuSp = true;
+            //USPostal, UKPostal, JapanPostal, AustralianPostal, DutchPostal, USPSPostal, UPUFICSPostal
+            var bUSPstSp = true, bUSPsnSp = true, bUSPlnSp = true, bUKPstSp = true, bJpPstSp = true, bAusPstSp = true, bDutPstSp = true, bUSPPstSp = true, bUPUPstSp = true;
+            //PDF417
+            var bPDFSp = true, bPDF_TrnMdSp = true;
+            //MicroPDF417
+            var bMcrPDFSp = true;
+            //DataMatrix
+            var bDtMtrxSp = true, bDtMtrx_FldSepSp = true, bDtMtrx_MrImgSp = true;
+            //MaxiCode, QRCode, MicroQR, Aztec
+            var bMxCdSp = true, bQRCdSp = true, bMcrQRSp = true, bAztcSp = true;
+            //Plessey
+            var bPlsySp = true, bPlsy_Len1Sp = true, bPlsy_Len2Sp = true;
+            //Telepen
+            var bTlpnSp = true, bTlpn_FmtSp = true, bTlpn_Len1Sp = true, bTlpn_Len2Sp = true;
+
+            $(document).on("pagecreate", "#pgSymbol2D", function() {
+
+                if (!js.BarCodeInit()) {
+                    alert("Barcode reader initialization failed");
+                }
+
+                var readerType = js.BarCodeGetReaderType();
+                oJsReaderInfo = parseReaderType(readerType);
+                setNonSprtSymbParam(oJsReaderInfo.Name);
+
+                showSettingData();
+
+                // Aztec    
+                $("#slsAztec").change(function () {
+                    oJsAztec.enable = $("#slsAztec").val();            
+                    if (!js.BarCodeSetSymbology(oJsAztec))
+                        alert("Unable to save the change.");
+                        //$("#spMsg").html("Unable to save the change.");                
+                });
+
+                //Data Matrix
+                $("#slsDtMtrx").change(function () {
+                    oJsDataMatrix.enable = $("#slsDtMtrx").val();
+                    if (!js.BarCodeSetSymbology(oJsDataMatrix))
+                        alert("Unable to save the change.");
+                });
+
+                $('#btnSaveDtMtrx').click(function () {            
+                    oJsDataMatrix.enable = $("#slsDtMtrx").val();
+                    oJsDataMatrix.mirrorImage = $("#selDtMtrx_DcMrImg").val();            
+                   //alert("txtDtMtrx_SprChar=" + $("#txtDtMtrx_SprChar").val().trim() + "  " + ";".charCodeAt(0));
+                   var fieldSep = $("#txtDtMtrx_SprChar").val(); 
+                   //alert("fieldSep=" + fieldSep + ", fieldSep(0)=" + fieldSep.charCodeAt(0) + ", fieldSep(1)=" + fieldSep.charCodeAt(1));
+                   if (fieldSep.length > 1)
+                       oJsDataMatrix.fieldSeparator = fieldSep.charCodeAt(1);
+                    else
+                       oJsDataMatrix.fieldSeparator = fieldSep.charCodeAt(0);
+                    //alert("DataMatrix: " + JSON.stringify(oJsDataMatrix) + "\nfieldSeparator: " + oJsDataMatrix.fieldSeparator);
+
+                    var ret = js.BarCodeSetSymbology(oJsDataMatrix);
+                    if (ret) {
+                        $("#spMsgDtMtrx").html("The changes have been saved successfully.");
+                        $("#dvDtMtrx").collapsible('collapse');
+                    }
+                    else
+                        $("#spMsgDtMtrx").html("Unable to save the changes.");            
+                });
+
+                $('#btnLoadDtMtrx').click(function () {
+                    oJsDataMatrix = js.BarCodeGetSymbology("DataMatrix");
+                    if (oJsDataMatrix != null && typeof oJsDataMatrix != 'undefined') {
+                        //alert(JSON.stringify(oJsDataMatrix));
+                        $("#slsDtMtrx").val(oJsDataMatrix.enable).slider('refresh');
+                        $("#selDtMtrx_DcMrImg").val(oJsDataMatrix.mirrorImage).change();
+                        $("#txtDtMtrx_SprChar").val(String.fromCharCode(oJsDataMatrix.fieldSeparator));
+                        $("#spMsgDtMtrx").html("Finished reloading.");
+                    }
+                    else {
+                        $("#spMsgDtMtrx").html("Unable to load the settings.");
+                    }
+                });
+
+                // MaxiCode
+                $("#slsMxCd").change(function () {
+                    oJsMaxiCode.enable = $("#slsMxCd").val();
+                    if (!js.BarCodeSetSymbology(oJsMaxiCode))
+                        alert("Unable to save the change.");
+                });
+
+                //MicroPDF417
+                $("#slsMcrPdf").change(function () {
+                    oJsMicroPDF417.enable = $("#slsMcrPdf").val();
+                    if (!js.BarCodeSetSymbology(oJsMicroPDF417))
+                        alert("Unable to save the change.");
+                });
+
+                $('#btnSaveMcrPdf').click(function () {
+                    oJsMicroPDF417.enable = $("#slsMcrPdf").val();
+                    oJsMicroPDF417.code128Emulation = Number($("#chxMcrPdf_C128Emu").prop("checked"));
+                    var ret = js.BarCodeSetSymbology(oJsMicroPDF417);
+                    if (ret) {
+                        $("#spMsgMcrPdf").html("The changes have been saved successfully.");
+                        $("#dvMcrPdf").collapsible('collapse');
+                    }
+                    else
+                        $("#spMsgMcrPdf").html("Unable to save the changes.");
+                });
+
+                $('#btnLoadMcrPdf').click(function () {
+                    oJsMicroPDF417 = js.BarCodeGetSymbology("MicroPDF417");
+                    if (oJsMicroPDF417 != null && typeof oJsMicroPDF417 != 'undefined') {
+                        $("#slsMcrPdf").val(oJsMicroPDF417.enable).slider('refresh');
+                        $("#chxMcrPdf_C128Emu").prop("checked", oJsMicroPDF417.code128Emulation).checkboxradio("refresh");
+                        $("#spMsgMcrPdf").html("Finished reloading.");
+                    }
+                    else {
+                        $("#spMsgMcrPdf").html("Unable to load the settings.");
+                    }
+                });
+
+                //MicroQR
+                $("#slsMcrQR").change(function () {
+                    oJsMicroQR.enable = $("#slsMcrQR").val();
+                    if (!js.BarCodeSetSymbology(oJsMicroQR))
+                        alert("Unable to save the change.");
+                });
+
+                // PDF417
+                $("#slsPdf").change(function () {
+                    oJsPDF417.enable = $("#slsPdf").val();
+                    if (!js.BarCodeSetSymbology(oJsPDF417))
+                        alert("Unable to save the change.");
+                });
+
+                // QR Code
+                $("#slsQR").change(function () {
+                    oJsQRCode.enable = $("#slsQR").val();
+                    if (!js.BarCodeSetSymbology(oJsQRCode))
+                        alert("Unable to save the change.");
+                });
+
+            });
+
+            function showSettingData() {
+
+                //alert("showSettingData...");        
+
+                // Aztec         
+                oJsAztec = js.BarCodeGetSymbology("Aztec");
+                //alert(JSON.stringify(oJsAztec));
+                if (oJsAztec == null)
+                    $("#trAztec").hide();
+                else
+                    $("#slsAztec").val(oJsAztec.enable).slider('refresh'); 
+
+                // Data Matrix 
+                oJsDataMatrix = js.BarCodeGetSymbology("DataMatrix");
+                //alert(JSON.stringify(oJsDataMatrix));
+                if (oJsDataMatrix == null) {
+                    $("#trDtMtrx").hide();
+                }
+                else {
+                    $("#slsDtMtrx").val(oJsDataMatrix.enable).slider('refresh');
+                    if (oJsReaderInfo.Name.includes("EX25"))
+                        $("#selDtMtrx_MrImg_1").hide();
+                    $("#selDtMtrx_DcMrImg").val(oJsDataMatrix.mirrorImage).change();
+                    $("#txtDtMtrx_SprChar").val(String.fromCharCode(oJsDataMatrix.fieldSeparator));
+                }
+
+                // MaxiCode        
+                oJsMaxiCode = js.BarCodeGetSymbology("MaxiCode");
+                //alert(JSON.stringify(oJsMaxiCode));        
+                if (oJsMaxiCode == null)
+                    $("#trMxCd").hide();
+                else
+                    $("#slsMxCd").val(oJsMaxiCode.enable).slider('refresh');
+                
+                // MicroPDF417
+                oJsMicroPDF417 = js.BarCodeGetSymbology("MicroPDF417");
+                if (oJsMicroPDF417 == null)
+                    $("#trMcrPdf").hide();
+                else {
+                    $("#slsMcrPdf").val(oJsMicroPDF417.enable).slider('refresh');
+                    $("#chxMcrPdf_C128Emu").prop("checked", oJsMicroPDF417.code128Emulation).checkboxradio("refresh");
+                }
+                
+                //MicroQR       
+                oJsMicroQR = js.BarCodeGetSymbology("MicroQR");
+                if (oJsMicroQR == null)
+                    $("#trMcrQR").hide();
+                else
+                    $("#slsMcrQR").val(oJsMicroQR.enable).slider('refresh');
+              
+                // PDF417
+                oJsPDF417 = js.BarCodeGetSymbology("PDF417");
+                if (oJsPDF417 == null)
+                    $("#trPdf").hide();
+                else
+                    $("#slsPdf").val(oJsPDF417.enable).slider('refresh');
+                
+                // QR Code
+                oJsQRCode = js.BarCodeGetSymbology("QRCode");
+                if (oJsQRCode == null)
+                    $("#trQR").hide();
+                else
+                    $("#slsQR").val(oJsQRCode.enable).slider('refresh');
+                
+            }
+
+        </script>
+    </head>
+
+    <body>
+        <div data-role="page" id="pgSymbol2D">
+
+            <div data-role="header">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                    <tr>
+                        <td width="15%">&nbsp;<&nbsp;<a class="navTextS" href="ReaderCfgIndex.html">Home</a></td>
+                        <td style="text-align: center; font-size:16pt">2D Symbologies</td>
+                        <td width="35%"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div data-role="main" class="ui-content">            
+                <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                    <tr id="trAztec">
+                        <td>
+                            <div data-role="fieldcontain">
+                                <label for="slsAztec"><b>Aztec</b>:</label>
+                                <select id="slsAztec" data-role="slider">
+                                    <option value="0">Off</option>
+                                    <option value="1">On</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <!--Data Matrix-->
+                    <tr id="trDtMtrx">
+                        <td width="100%">
+                            <table border="0" cellpadding="1" cellspacing="0" width="100%">
+                                <tr>
+                                    <td>
+                                        <div data-role="fieldcontain">
+                                            <label for="slsDtMtrx"><b>Data Matrix</b>:</label>
+                                            <select id="slsDtMtrx" data-role="slider">
+                                                <option value="0">Off</option>
+                                                <option value="1">On</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div data-role="collapsible" id="dvDtMtrx">
+                                            <h1>Data Matrix Detail</h1>
+                                            <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                                                <tr>
+                                                    <td>
+                                                        <label for="selDtMtrx_DcMrImg"><b>Decode Mirror Image:</b></label>
+                                                        <select id="selDtMtrx_DcMrImg">
+                                                            <option value="0">Never</option>
+                                                            <option id="selDtMtrx_MrImg_1" value="1">Always</option>
+                                                            <option value="2">Auto-discriminate</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <label for="txtDtMtrx_SprChar"><b>Separator Character (FNC1)</b></label>
+                                                        <input type="text" id="txtDtMtrx_SprChar" />
+                                                    </td>
+                                                </tr>
+                                                <!--tr><td><input id="btnSaveDtMtrx" type="button" value="Apply" /></td></tr-->
+                                                <tr><td><a data-role="button" id="btnSaveDtMtrx" style="background-color:Highlight">Apply</a> </td></tr>
+                                                <tr><td><input id="btnLoadDtMtrx" type="button" value="Reload" /></td></tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr><td><span id="spMsgDtMtrx" class="regMsg"></span></td></tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr id="trMxCd">
+                        <td>
+                            <div data-role="fieldcontain">
+                                <label for="slsMxCd"><b>MaxiCode</b>:</label>
+                                <select id="slsMxCd" data-role="slider">
+                                    <option value="0">Off</option>
+                                    <option value="1">On</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <!--MicroPDF417-->
+                    <tr id="trMcrPdf">
+                        <td width="100%">
+                            <table border="0" cellpadding="1" cellspacing="0" width="100%">
+                                <tr>
+                                    <td>
+                                        <div data-role="fieldcontain">
+                                            <label for="slsMcrPdf"><b>MicroPDF417</b>:</label>
+                                            <select id="slsMcrPdf" data-role="slider">
+                                                <option value="0">Off</option>
+                                                <option value="1">On</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div data-role="collapsible" id="dvMcrPdf">
+                                            <h1>MicroPDF417 Detail</h1>
+                                            <table border="0" cellpadding="1" cellspacing="1" width="100%">
+                                                <tr>
+                                                    <td>
+                                                        <label for="chxMcrPdf_C128Emu">Code 128 Emulation</label>
+                                                        <input type="checkbox" id="chxMcrPdf_C128Emu" />
+                                                    </td>
+                                                </tr>
+                                                <!--tr><td><input id="btnSaveMcrPdf" type="button" value="Apply" /></td></tr-->
+                                                <tr><td><a data-role="button" id="btnSaveMcrPdf" style="background-color:Highlight">Apply</a> </td></tr>
+                                                <tr><td><input id="btnLoadMcrPdf" type="button" value="Reload" /></td></tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr><td><span id="spMsgMcrPdf" class="regMsg"></span></td></tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr id="trMcrQR">
+                        <td>
+                            <div data-role="fieldcontain">
+                                <label for="slsMcrQR"><b>MicroQR</b>:</label>
+                                <select id="slsMcrQR" data-role="slider">
+                                    <option value="0">Off</option>
+                                    <option value="1">On</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <!--PDF417-->
+                    <tr id="trPdf">
+                        <td>
+                            <div data-role="fieldcontain">
+                                <label for="slsPdf"><b>PDF417</b>:</label>
+                                <select id="slsPdf" data-role="slider">
+                                    <option value="0">Off</option>
+                                    <option value="1">On</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr id="trQR">
+                        <td>
+                            <div data-role="fieldcontain">
+                                <label for="slsQR"><b>QR Code</b>:</label>
+                                <select id="slsQR" data-role="slider">
+                                    <option value="0">Off</option>
+                                    <option value="1">On</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </body>
+</html>
+

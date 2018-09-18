@@ -1,0 +1,173 @@
+<html>
+  <head>
+    <title>CipherLab JavaScript(v1) Test</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script type="text/javascript" src="browserplugin_framewk.js"></script> 
+    <script type="text/javascript" src="../../js/js_base_api.js"></script>
+    <script type="text/javascript" src="../../js/cipherlab_v1/sw_reader_api.js"></script>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            js_sleep(2000);
+
+            document.getElementById("spBarCodeInit").textContent = "Unknown";
+            document.getElementById("spReaderType").textContent = "Unknown";
+
+            try {
+                var ret_BarCodeInit = js.BarCodeInit();
+
+                if (ret_BarCodeInit == true) {
+                    document.getElementById("spBarCodeInit").textContent = "Succeed";
+                    return;
+                }
+                else {
+                    document.getElementById("spBarCodeInit").textContent = "Failed";
+                    return;
+                }
+            }
+            catch (err) {
+                document.getElementById("spBarCodeInit").textContent = "Error";
+                return;
+            }
+
+            try {
+                var ret_BarCodeReset = js.BarCodeReset();
+                var reader_type_name = reader_getReaderTypeName();
+
+                document.getElementById("spReaderType").textContent = reader_type_name;
+            }
+            catch (err) {
+                document.getElementById("spReaderType").textContent = "Error";
+                return;
+            }
+        }
+    </script>
+  </head>
+
+  <body> 
+    <center> 
+        <div id="pgIndex">
+
+          <div>
+              <table cellpadding="0" cellspacing="0" border="0" width="350px">
+                  <tr><td style="text-align: center; font-size:17pt">CipherLab JavaScript(v1) Test</td></tr>
+              </table>
+          </div>
+
+          <div class="ui-content">
+               
+                <table>
+                    <tr>
+                        <td>BarCodeInit:</td>
+                        <td><span id="spBarCodeInit"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Reader Type:</td>
+                        <td><span id="spReaderType"></span></td>
+                    </tr>
+                
+                </table>
+                <br/>
+    			
+			    <table border="1">
+				    <tr>
+					    <td style="width: 100px">Device name</td>
+					    <td style="width:160px">Reader type</td>
+					    <td style="width:100px">Updated date</td>
+				    </tr>
+
+				    <tr>
+					    <td>All</td>
+					    <td>
+						    <a target="_blank" href="reader_config/ReaderCfgIndex.html">Reader Config</a><br/><br/>
+						    <a target="_blank" href="reader_config/ScanTest.html">Scan Test</a><br/><br/>
+					    </td>
+					    <td>2017/12/25</td>
+				    </tr>
+    				
+				    <tr>
+					    <td>RS31</td>
+					    <td>
+						    <a target="_blank" href="api/SE4500_test.html">SE4500 Test(2D)</a><br/><br/>
+					    </td>
+					    <td>2017/12/25</td>
+				    </tr>
+    				
+				    <tr>
+					    <td>9700A</td>
+					    <td>
+						    SE955<br/><br/>
+						    SE1524<br/><br/>
+						    <a target="_blank" href="api/SE4500_test.html">SE4500 Test(2D)</a><br/><br/>
+						    <a target="_blank" href="api/Ex25_test.html">Ex25(2D)</a><br/><br/>
+					    </td>
+					    <td>2017/12/25</td>
+				    </tr>
+
+				    <tr>
+					    <td>RS50</td>
+					    <td>
+						    <a target="_blank" href="api/SM1_test.html">SM1(1D)</a><br/><br/>
+						    <a target="_blank" href="api/SE4750SR_test.html">SE4750SR(2D)</a><br/><br/>
+						    <a target="_blank" href="api/SE4750MR_test.html">SE4750MR(2D)</a><br/><br/>
+					    </td>
+					    <td>2017/12/25</td>
+				    </tr>
+
+				    <tr>
+					    <td class="style1">RK25</td>
+					    <td>
+						    <a target="_blank" href="api/SM1_test.html">SM1(1D)</a><br/><br/>
+						    SM2(1D)<br/><br/>
+						    <a target="_blank" href="api/SE4750SR_test.html">SE4750SR(2D)</a><br/><br/>
+						    <a target="_blank" href="api/SE4750MR_test.html">SE4750MR(2D)</a><br/><br/>
+					    </td>
+					    <td>2017/12/25</td>
+				    </tr>
+
+				    <tr>
+					    <td class="style1"></td>
+					    <td>
+    					
+					    </td>
+					    <td></td>
+				    </tr>
+
+				    <tr>
+					    <td class="style1"></td>
+					    <td>
+    					
+					    </td>
+					    <td></td>
+				    </tr>
+    				
+			    </table>
+    			
+			    <br/>
+    			
+			    <table border="1">
+				    <caption>DOC</caption>
+				    
+				    <tr>
+					    <td width=260>Name</td>
+					    <td width=100>Updated date</td>
+				    </tr>
+
+				    <tr>
+					    <td>
+						    <a target="_blank" href="https://docs.google.com/spreadsheets/d/1VGzEtB7OvSutiy_nixMAHHm5ygPEfUyApU5GulYF-cg/edit#gid=1307107213">Browser_JSAPI_status</a><br/><br/>
+					    </td>
+					    <td></td>
+				    </tr>
+    				
+			    </table>
+    			
+          </div>
+
+        </div>
+    </center>
+
+  </body>
+  
+</html>

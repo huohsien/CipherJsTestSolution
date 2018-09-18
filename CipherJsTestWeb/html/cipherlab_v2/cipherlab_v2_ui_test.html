@@ -1,0 +1,711 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta name="viewport" content="width=device-width"/>
+    <title>System API Test(v2)</title>
+    <link rel="stylesheet" type="text/css" href="../../css/outcoder/ScriptExamples.css">
+    <script src="../../js/outcoder/ScriptExamples.js"></script>
+    <script src="../../js/cipherlab_v2/help/ui_api_help.js"></script>
+</head>
+
+
+<body>
+    <div class="header">
+        <h2>CipherLab UI Action</h2>
+    </div>
+    <div id="dialog"><div id="dialogText" style="white-space: pre-wrap;"></div></div>
+
+    <!--JSFullScreenMode(mode)-->
+    <script  id="JSFullScreenMode_Script" type="text/javascript">
+    function test_JSFullScreenMode(textElement) 
+    {
+        try 
+        {
+            var mode = JSFullScreenMode();
+            JSFullScreenMode(!mode);
+            setText(textElement, "Get " + mode + " then set to " + !fullScreen);
+        } 
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSFullScreenMode(Switch true and false)</h3>
+        <pre class="example" id="JSFullScreenMode_Code"></pre>
+        <script>insertScriptInPre('JSFullScreenMode_Code', 'JSFullScreenMode_Script');</script>
+        <input type="button" onclick="test_JSFullScreenMode('JSFullScreenMode_Text')" value="Test JSFullScreenMode" />
+        <div class="outputText" type="text" id="JSFullScreenMode_Text"></div>
+    </div>
+
+    <!--JSMinimizeBrowser-->
+    <script  id="JSMinimizeBrowser_Script" type="text/javascript">
+    function test_JSMinimizeBrowser(textElement) 
+    {
+        try 
+        {
+            JSMinimizeBrowser();
+        } catch (e) {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSMinimizeBrowser</h3>
+        <pre class="example" id="JSMinimizeBrowser_Code"></pre>
+        <script>insertScriptInPre('JSMinimizeBrowser_Code', 'JSMinimizeBrowser_Script');</script>
+        <input type="button" onclick="test_JSMinimizeBrowser('JSMinimizeBrowser_Text')" value="Test JSMinimizeBrowser" />
+        <div class="outputText" type="text" id="JSMinimizeBrowser_Text"></div>
+    </div>
+
+    <!--JSGetBrightness()-->
+    <!--JSSetBrightness(brightness)-->
+    <script  id="JSSetBrightness_Script" type="text/javascript">
+    function test_JSSetBrightness(textElement, optionId) 
+    {
+        var optin = ui_getSelectValue(optionId);
+
+        try 
+        {
+            if(optin=='AutoSwitch')
+            {
+                var valid_values = ui_getSelectList(optionId);
+                var ret_value = JSGetBrightness();
+                var value = ui_getNextValue(ret_value, valid_values);
+                JSSetBrightness(value);
+                var ret_value2 = JSGetBrightness();
+
+                setText(textElement, "Get " + ret_value + " then set to " + value + " then get " + ret_value2);
+            }
+            else
+            {
+                JSSetBrightness(optin);
+                var ret_value = JSGetBrightness();
+                setText(textElement, "Set to " + optin + " then get " + ret_value);
+            }
+        } 
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSSetBrightness</h3>
+        <pre class="example" id="JSSetBrightness_Code"></pre>
+        <script>insertScriptInPre('JSSetBrightness_Code', 'JSSetBrightness_Script');</script>
+        <select id="JSSetBrightness_Value" style="width:220px;border-radius:3px;padding:6px;margin-left:30px;">
+                <option value="AutoSwitch">Auto Switch</option>
+                <option value="0">  0</option>
+                <option value="0.1">0.1</option>
+                <option value="0.2">0.2</option>
+                <option value="0.3">0.3</option>
+                <option value="0.4">0.4</option>
+                <option value="0.5">0.5</option>
+                <option value="0.6">0.6</option>
+                <option value="0.7">0.7</option>
+                <option value="0.8">0.8</option>
+                <option value="0.9">0.9</option>
+                <option value="1">  1</option>
+            </select>
+        <input type="button" onclick="test_JSSetBrightness('JSSetBrightness_Text','JSSetBrightness_Value')" value="Test JSSetBrightness" />
+        <div class="outputText" type="text" id="JSSetBrightness_Text"></div>
+    </div>
+
+    <!--JSGetTextZoomLevel()-->
+    <!--JSSetTextZoomLevel(level)-->
+    <script  id="JSSetTextZoomLevel_Script" type="text/javascript">
+    function test_JSSetTextZoomLevel(textElement, optionId) 
+    {
+        var optin = ui_getSelectValue(optionId);
+
+        try 
+        {
+            if(optin=='AutoSwitch')
+            {
+                var valid_values = ui_getSelectList(optionId);
+                var ret_value = JSGetTextZoomLevel();
+                var value = ui_getNextValue(ret_value, valid_values);
+                JSSetTextZoomLevel(value);
+                var ret_value2 = JSGetTextZoomLevel();
+                setText(textElement, "Get " + ret_value + " then set to " + value + " then get " + ret_value2);
+            }
+            else
+            {
+                JSSetTextZoomLevel(optin);
+                var ret_value = JSGetTextZoomLevel();
+                setText(textElement, "Set to " + optin + " then get " + ret_value);
+            }
+        } 
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSSetTextZoomLevel</h3>
+        <pre class="example" id="JSSetTextZoomLevel_Code"></pre>
+        <script>insertScriptInPre('JSSetTextZoomLevel_Code', 'JSSetTextZoomLevel_Script');</script>
+        <select id="JSSetTextZoomLevel_Value" style="width:220px;border-radius:3px;padding:6px;margin-left:30px;">
+            <option value="AutoSwitch">Auto Switch</option>
+            <option value="0">  0</option>
+            <option value="0.1">0.1</option>
+            <option value="0.2">0.2</option>
+            <option value="0.3">0.3</option>
+            <option value="0.4">0.4</option>
+            <option value="0.5">0.5</option>
+            <option value="0.6">0.6</option>
+            <option value="0.7">0.7</option>
+            <option value="0.8">0.8</option>
+            <option value="0.9">0.9</option>
+            <option value="1">  1</option>
+        </select>
+        <input type="button" onclick="test_JSSetTextZoomLevel('JSSetTextZoomLevel_Text','JSSetTextZoomLevel_Value')" value="Test SetTextZoomLevel" />
+        <div class="outputText" type="text" id="JSSetTextZoomLevel_Text"></div>
+    </div>
+
+    <!--JSGetRingerMode()-->
+    <!--JSSetRingerMode(mode)-->
+    <script  id="JSSetRingerMode_Script" type="text/javascript">
+    function test_JSSetRingerMode(textElement, optionId) 
+    {
+        var optin = ui_getSelectValue(optionId);
+
+        try 
+        {
+            if(optin=='AutoSwitch')
+            {
+                var valid_values = ui_getSelectList(optionId);
+                var ret_value = JSGetRingerMode();
+                var value = ui_getNextValue(ret_value, valid_values);
+                JSSetRingerMode(value);
+                var ret_value2 = JSGetRingerMode();
+                setText(textElement, "Get "+ret_value + " then set to " + value + " then get " + ret_value2);
+            }
+            else
+            {
+                JSSetRingerMode(optin);
+                var ret_value = JSGetRingerMode();
+                setText(textElement, "Set to " + optin + " then get " + ret_value);
+            }
+        } 
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSSetRingerMode</h3>
+        <pre class="example" id="JSSetRingerMode_Code"></pre>
+        <script>insertScriptInPre('JSSetRingerMode_Code', 'JSSetRingerMode_Script');</script>
+        <select id="JSSetRingerMode_Value" style="width:220px;border-radius:3px;padding:6px;margin-left:30px;">
+            <option value="AutoSwitch">AutoSwitch</option>
+            <option value="0">0-silent</option>
+            <option value="1">1-vibrate</option>
+            <option value="2">2-normal</option>
+        </select>
+        <input type="button" onclick="test_JSSetRingerMode('JSSetRingerMode_Text','JSSetRingerMode_Value')" value="Test JSSetRingerMode" />
+        <div class="outputText" type="text" id="JSSetRingerMode_Text"></div>
+    </div>
+
+
+    <!--JSGetDeviceVolume(stream)-->
+    <!--JSSetDeviceVolume(stream, level)-->
+    <script  id="JSSetDeviceVolume_Script" type="text/javascript">
+    function test_JSSetDeviceVolume(textElement, stream_select_id, level__select_id) 
+    {
+        var streamType = ui_getSelectValue(stream_select_id);
+        var level = ui_getSelectValue(level__select_id);
+        var max_level = 0;
+        
+        try
+        {
+            max_level = airlock.device.getMaxVolume(streamType);
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+
+        try 
+        {
+            JSSetDeviceVolume(streamType, level);
+            var ret_value = JSGetDeviceVolume();
+            setText(textElement, "Set JSSetDeviceVolume("+streamType+","+level+") then get "+ret_value+"[max_level="+max_level+"]");
+        } 
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSSetDeviceVolume</h3>
+        <pre class="example" id="JSSetDeviceVolume_Code"></pre>
+        <script>insertScriptInPre('JSSetDeviceVolume_Code', 'JSSetDeviceVolume_Script');</script>
+        <select id="JSSetDeviceVolume_Value1" style="width:220px;border-radius:3px;padding:6px;margin-left:30px;">
+            <option value="-1">-1-NotificationDefault</option>
+            <option value="0"> 0-VoiceCall</option>
+            <option value="1"> 1-System</option>
+            <option value="2"> 2-Ring</option>
+            <option value="3"> 3-Music</option>
+            <option value="4"> 4-Alarm</option>
+            <option value="5"> 5-Notification</option>
+            <option value="6"> 6-Unknown</option>
+            <option value="7"> 7-Unknown</option>
+            <option value="8"> 8-Dtmf</option>
+        </select>
+
+        <select id="JSSetDeviceVolume_Value2" style="width:220px;border-radius:3px;padding:6px;margin-left:30px;">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+        </select>
+
+        <input type="button" onclick="test_JSSetDeviceVolume('JSSetDeviceVolume_Text','JSSetDeviceVolume_Value1','JSSetDeviceVolume_Value2')" value="Test JSSetDeviceVolume" />
+        <div class="outputText" type="text" id="JSSetDeviceVolume_Text"></div>
+    </div>
+
+
+    <!--JSLog(level, message)-->
+    <!--JSReadLogFile()-->
+    <!--JSCleanLogFile()-->
+    <script  id="JSLog_Script" type="text/javascript">
+    function test_JSLog(textElement, ui_level_id) 
+    {
+        try 
+        {
+            var level = document.getElementById(ui_level_id).value;
+            var message = "Test JSLog";
+
+            JSLog(level, message);   
+            setText(textElement, "Add Log("+level+"):" + message);
+        } 
+        catch (error) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+
+        setText(ui_read_id, "");
+    }
+
+    function test_JSReadLogFile(textElement) 
+    {
+        try 
+        {
+            var read_messages = JSReadLogFile();   
+            setText(textElement, "Read Log:" + read_messages);
+        } 
+        catch (error) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+
+    function test_JSCleanLogFile(textElement) 
+    {
+        try 
+        {
+            JSCleanLogFile();
+            setText(textElement, "Clean Log");
+        } 
+        catch (error) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }    
+    }
+
+    function test_GetLogEntries(textElement) 
+    {
+        try {
+            setText(textElement, "Getting entries...");
+
+            airlock.log.getEntries()
+            .then(function (logEntries) 
+            {
+                setText(textElement, "Retrieved entries.");
+                var text = "";
+                for (var i = 0; i < logEntries.length; i++)
+                {
+                    var entry = logEntries[i];
+                    text += getPropertyValues(entry) + "\n";
+                }
+                showDialog(text);
+            }).catch(function (error) 
+            {
+                setText(textElement, "[Error]" + error);
+            });
+        } catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+        <div class="testDiv">
+            <h3>Test JSLog</h3>
+            <pre class="example" id="JSLog_Code"></pre>
+            <script>insertScriptInPre('JSLog_Code', 'JSLog_Script');</script>
+            <select id="JSLog_level" style="width:220px;border-radius:3px;padding:6px;margin-left:30px;">
+                <option value="1">1-All</option>
+                <option value="2">2-Debug</option>
+                <option value="3">3-Info</option>
+                <option value="4">4-Warn</option>
+                <option value="5">5-Error</option>
+            </select>
+            <input type="button" onclick="test_JSLog('JSLog_Text','JSLog_level')" value="Test JSLog"/>
+            <input type="button" onclick="test_JSReadLogFile('JSLog_Text')" value="Test JSReadLogFile"/>
+            <input type="button" onclick="test_JSCleanLogFile('JSLog_Text')" value="Tesst JSCleanLogFile"/>
+            <input type="button" onclick="test_GetLogEntries('JSLog_Text')" value="Tesst GetLogEntries(airlock)"/>
+            <div class="outputText" type="text" id="JSLog_Text"></div>
+        </div>
+
+    <!--JSBeep(onTime, offTime, freq, count)-->
+    <script  id="JSBeep_Script" type="text/javascript">
+    function test_JSBeep(textElement) 
+    {
+        try
+        {
+            JSBeep();
+            setText(textElement, "Beep");
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSBeep</h3>
+        <pre class="example" id="JSBeep_Code"></pre>
+        <script>insertScriptInPre('JSBeep_Code', 'JSBeep_Script');</script>
+        <input type="button" onclick="test_JSBeep('JSBeep_Text')" value="Test JSBeep" />
+        <div class="outputText" type="text" id="JSBeep_Text"></div>
+    </div>
+
+
+    <!--JSVibrate(onTime, offTime, count)-->
+    <script  id="JSVibrate_Script" type="text/javascript">
+    function test_JSVibrate(textElement) 
+    {
+        try
+        {
+            JSVibrate();
+            setText(textElement, "Vibrating");
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSVibrate</h3>
+        <pre class="example" id="JSVibrate_Code"></pre>
+        <script>insertScriptInPre('JSVibrate_Code', 'JSVibrate_Script');</script>
+        <input type="button" onclick="test_JSVibrate('JSVibrate_Text')" value="Test JSVibrate" />
+        <div class="outputText" type="text" id="JSVibrate_Text"></div>
+    </div>
+
+    <!--JSGetDisplaySleep()-->
+    <!--JSSetDisplaySleep(enable)-->
+    <script  id="JSSetDisplaySleep_Script" type="text/javascript">
+    function test_JSSetDisplaySleep(textElement) 
+    {
+        try
+        {
+            var enabled = JSGetDisplaySleep();
+            JSSetDisplaySleep(!enabled);
+            setText(textElement, "Get " + enabled + " then set to " + !enabled);
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSSetDisplaySleep</h3>
+        <pre class="example" id="JSSetDisplaySleep_Code"></pre>
+        <script>insertScriptInPre('JSSetDisplaySleep_Code', 'JSSetDisplaySleep_Script');</script>
+        <input type="button" onclick="test_JSSetDisplaySleep('JSSetDisplaySleep_Text')" value="Test JSSetDisplaySleep" />
+        <div class="outputText" type="text" id="JSSetDisplaySleep_Text"></div>
+    </div>
+
+    <!--JSGetAutoRotate (mode)-->
+    <!--JSSetAutoRotate(mode)-->
+    <script  id="JSSetAutoRotate_Script" type="text/javascript">
+    function test_JSSetAutoRotate(textElement, ui_mode_id) 
+    {
+        var ui_mode = ui_getSelectValue(ui_mode_id);
+
+        if(ui_mode=="AutoSwitch")
+        {
+            try
+            {
+                var valid_values = ui_getSelectList(ui_mode_id);
+                var ret_value = JSGetAutoRotate();
+                var value = ui_getNextValue(ret_value, valid_values);
+                JSSetAutoRotate(value);
+                var ret_value2 = JSGetAutoRotate();
+
+                setText(textElement, "Get " + ret_value + " then set to " + value + " then get " + ret_value2);
+            }
+            catch (e) 
+            {
+                setText(textElement, "[Error]" + e);
+                return;
+            }
+        }
+        else
+        {
+            try 
+            {
+                JSSetAutoRotate(ui_mode);
+                setText(textElement, "Set to " + value + " then get " + ret_value2);
+            } 
+            catch (error) 
+            {
+                setText(textElement, "[Error]" + e);
+                return;
+            }
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSSetAutoRotate</h3>
+        <pre class="example" id="JSSetAutoRotate_Code"></pre>
+        <script>insertScriptInPre('JSSetAutoRotate_Code', 'JSSetAutoRotate_Script');</script>
+        <select id="JSSetAutoRotate_mode" style="width:220px;border-radius:3px;padding:6px;margin-left:30px;">
+            <option value="AutoSwitch">Auto Switch</option>
+            <option value="1">1-unlocked</option>
+            <option value="2">2-locked portrait</option>
+            <option value="3">3-locked landscape</option>
+        </select>
+        <input type="button" onclick="test_JSSetAutoRotate('JSSetAutoRotate_Text','JSSetAutoRotate_mode')" value="Test JSSetAutoRotate" />
+        <div class="outputText" type="text" id="JSSetAutoRotate_Text"></div>
+    </div>
+
+
+    <!--JSGetBatteryLevel()-->
+    <script  id="JSGetBatteryLevel_Script" type="text/javascript">
+    function test_JSGetBatteryLevel(textElement) 
+    {
+        try
+        {
+            var level = JSGetBatteryLevel();
+            setText(textElement, "Get " + level);
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSGetBatteryLevel</h3>
+        <pre class="example" id="JSGetBatteryLevel_Code"></pre>
+        <script>insertScriptInPre('JSGetBatteryLevel_Code', 'JSGetBatteryLevel_Script');</script>
+        <input type="button" onclick="test_JSGetBatteryLevel('JSGetBatteryLevel_Text')" value="Test JSGetBatteryLevel" />
+        <div class="outputText" type="text" id="JSGetBatteryLevel_Text"></div>
+    </div>
+
+    <!--JSGetDisplayLanguage()-->
+    <script  id="JSGetDisplayLanguage_Script" type="text/javascript">
+    function test_JSGetDisplayLanguage(textElement) 
+    {
+        try
+        {
+            var languge = JSGetDisplayLanguage();
+            setText(textElement, "Get " + languge);
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSGetDisplayLanguage</h3>
+        <pre class="example" id="JSGetDisplayLanguage_Code"></pre>
+        <script>insertScriptInPre('JSGetDisplayLanguage_Code', 'JSGetDisplayLanguage_Script');</script>
+        <input type="button" onclick="test_JSGetDisplayLanguage('JSGetDisplayLanguage_Text')" value="Test JSGetDisplayLanguage" />
+        <div class="outputText" type="text" id="JSGetDisplayLanguage_Text"></div>
+    </div>
+
+    <!--24.JSGetCurrentSsid()-->
+    <script  id="JSGetCurrentSsid_Script" type="text/javascript">
+    function test_JSGetCurrentSsid(textElement) 
+    {
+        try
+        {
+            var ssid = JSGetCurrentSsid();
+            setText(textElement, "Get " + ssid);
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSGetCurrentSsid</h3>
+        <pre class="example" id="JSGetCurrentSsid_Code"></pre>
+        <script>insertScriptInPre('JSGetCurrentSsid_Code', 'JSGetCurrentSsid_Script');</script>
+        <input type="button" onclick="test_JSGetCurrentSsid('JSGetCurrentSsid_Text')" value="Test JSGetCurrentSsid" />
+        <div class="outputText" type="text" id="JSGetCurrentSsid_Text"></div>
+    </div>
+
+    <!--23.JSGetSsidList()-->
+    <script  id="JSGetSsidList_Script" type="text/javascript">
+    function test_JSGetSsidList(textElement) 
+    {
+        try
+        {
+            var ssid_list = JSGetSsidList();
+            setText(textElement, "Get " + ssid_list);
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSGetSsidList</h3>
+        <pre class="example" id="JSGetSsidList_Code"></pre>
+        <script>insertScriptInPre('JSGetSsidList_Code', 'JSGetSsidList_Script');</script>
+        <input type="button" onclick="test_JSGetSsidList('JSGetSsidList_Text')" value="Test JSGetSsidList" />
+        <div class="outputText" type="text" id="JSGetSsidList_Text"></div>
+    </div>
+
+    <!--22.JSSetWifiPower(mode)-->
+    <!--21.JSGetWifiPower()-->
+    <script  id="JSSetWifiPower_Script" type="text/javascript">
+    function test_JSSetWifiPower(textElement) 
+    {
+        try
+        {
+            var enabled = JSGetWifiPower();
+            var power = (enabled==1)?0:1;
+            JSSetWifiPower(power);
+            setText(textElement, "Get " + enabled + " then set to "+ power);
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSSetWifiPower</h3>
+        <pre class="example" id="JSSetWifiPower_Code"></pre>
+        <script>insertScriptInPre('JSSetWifiPower_Code', 'JSSetWifiPower_Script');</script>
+        <input type="button" onclick="test_JSSetWifiPower('JSSetWifiPower_Text')" value="Test JSSetWifiPower" />
+        <div class="outputText" type="text" id="JSSetWifiPower_Text"></div>
+    </div>
+
+
+    <!--20.JSGetSystemInfo()-->
+    <script  id="JSGetSystemInfo_Script" type="text/javascript">
+    function test_JSGetSystemInfo(textElement) 
+    {
+        try
+        {
+            var info = JSGetSystemInfo();
+            setText(textElement, "Get " + info);
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSGetSystemInfo</h3>
+        <pre class="example" id="JSGetSystemInfo_Code"></pre>
+        <script>insertScriptInPre('JSGetSystemInfo_Code', 'JSGetSystemInfo_Script');</script>
+        <input type="button" onclick="test_JSGetSystemInfo('JSGetSystemInfo_Text')" value="Test JSGetSystemInfo" />
+        <div class="outputText" type="text" id="JSGetSystemInfo_Text"></div>
+    </div>
+
+    <!--19.JSCloseBrowser(appPackageName)-->
+    <script  id="JSCloseBrowser_Script" type="text/javascript">
+    function test_JSCloseBrowser(textElement, ui_appPackageName_id) 
+    {
+        try
+        {
+            JSCloseBrowser();
+            setText(textElement, "Close browser then open ");
+        }
+        catch (e) 
+        {
+            setText(textElement, "[Error]" + e);
+            return;
+        }
+    }
+    </script>
+    <div class="testDiv">
+        <h3>Test JSCloseBrowser</h3>
+        <pre class="example" id="JSCloseBrowser_Code"></pre>
+        <script>insertScriptInPre('JSCloseBrowser_Code', 'JSCloseBrowser_Script');</script>
+        <select id="JSSetAutoRotate_mode" style="width:220px;border-radius:3px;padding:6px;margin-left:30px;">
+            <option value="AutoSwitch">Auto Switch</option>
+            <option value="sw.programme.readerconfig">Readerconfig</option>
+            <option value="2">2-locked portrait</option>
+            <option value="3">3-locked landscape</option>
+        </select>
+        <input type="button" onclick="test_JSCloseBrowser('JSCloseBrowser_Text')" value="Test JSCloseBrowser" />
+        <div class="outputText" type="text" id="JSCloseBrowser_Text"></div>
+    </div>
+
+    <!--18.JSLaunchApp(appPackageName)-->
+
+
+    <!--17.JSCopyFile(existingFilename, newFileName)-->
+    <!--16.JSDeleteFile(filename)-->
+    <!--15.JSRenameFile(oldFilename, newFileName)-->
+    <!--14.JSFileExists(filename)-->
+    <!--13.JSFileGetCurrentDir()-->
+    <!--12.JSFileGetSDDir()-->
+    <!--11.JSFileOpen(filename)-->
+    <!--10.JSFileCreate(filename)-->
+    <!--9.JSFileClose(fileID)-->
+    <!--8.JSFileReadBase64(fileID, length)-->
+    <!--7.JSFileRead(fileID, length)-->
+    <!--6.JSFileWriteBase64(fileID, base64string)-->
+    <!--5.JSFileWriteText(fileID, dataString)-->
+    <!--4.JSGetFileOffset(fileID)-->
+    <!--3.JSFileSeek(fileID, offset)-->
+    <!--2.JSGetFileSize(fileID)-->
+
+    <!--1.JSSetHttpErrorAction(action, url)-->
+
+</body>
