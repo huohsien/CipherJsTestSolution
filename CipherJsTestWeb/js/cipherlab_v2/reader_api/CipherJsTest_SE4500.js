@@ -2,7 +2,7 @@ class CipherJsTest_SE4500 extends CipherJsTestActionBase
 {
     initCipherJsData()
     {
-        alert("initCipherJsData3");
+        alert("initCipherJsData");
     
         try 
         {
